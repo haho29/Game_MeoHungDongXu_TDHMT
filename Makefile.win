@@ -1,0 +1,43 @@
+# Project: GameMeoHungDongXu
+# Makefile created by Dev-C++ 5.11
+
+CPP      = g++.exe
+CC       = gcc.exe
+WINDRES  = windres.exe
+OBJ      = main.o TraiTim.o Meo.o VatThe.o GiaoDien.o VeHinh.o
+LINKOBJ  = main.o TraiTim.o Meo.o VatThe.o GiaoDien.o VeHinh.o
+LIBS     = -L"D:/App/DevC/Dev-Cpp/MinGW64/x86_64-w64-mingw32/lib32" -lbgi -lgdi32 -lcomdlg32 -luuid -loleaut32 -lole32 -lbgi -lgdi32 -luser32 -m32
+INCS     = -I"D:/App/DevC/Dev-Cpp/MinGW64/include" -I"D:/App/DevC/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include"
+CXXINCS  = -I"D:/App/DevC/Dev-Cpp/MinGW64/include" -I"D:/App/DevC/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include"
+BIN      = GameMeoHungDongXu.exe
+CXXFLAGS = $(CXXINCS) -m32
+CFLAGS   = $(INCS) -m32
+RM       = rm.exe -f
+
+.PHONY: all all-before all-after clean clean-custom
+
+all: all-before $(BIN) all-after
+
+clean: clean-custom
+	${RM} $(OBJ) $(BIN)
+
+$(BIN): $(OBJ)
+	$(CPP) $(LINKOBJ) -o $(BIN) $(LIBS)
+
+main.o: main.c
+	$(CPP) -c main.c -o main.o $(CXXFLAGS)
+
+TraiTim.o: TraiTim.c
+	$(CPP) -c TraiTim.c -o TraiTim.o $(CXXFLAGS)
+
+Meo.o: Meo.c
+	$(CPP) -c Meo.c -o Meo.o $(CXXFLAGS)
+
+VatThe.o: VatThe.c
+	$(CPP) -c VatThe.c -o VatThe.o $(CXXFLAGS)
+
+GiaoDien.o: GiaoDien.c
+	$(CPP) -c GiaoDien.c -o GiaoDien.o $(CXXFLAGS)
+
+VeHinh.o: VeHinh.c
+	$(CPP) -c VeHinh.c -o VeHinh.o $(CXXFLAGS)

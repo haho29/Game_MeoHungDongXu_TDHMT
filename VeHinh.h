@@ -1,0 +1,21 @@
+#ifndef VEHINH_H
+#define VEHINH_H
+
+#include <stdbool.h>
+
+// Ham ho tro to mau (thay the bar de dong bo vram)
+void my_bar(int left, int top, int right, int bottom, int color);
+
+// Bresenham algorithm for lines
+void veDuongThang(int x1, int y1, int x2, int y2, int color);
+
+// Midpoint algorithm for circles
+void veDuongTron(int xc, int yc, int r, int color);
+
+// Midpoint algorithm for ellipses
+void veHinhElip(int xc, int yc, int rx, int ry, int color);
+
+// Recursive Boundary Fill algorithm
+void toMauDeQuy(int x, int y, int fill_color, int boundary_color);
+
+#endif
