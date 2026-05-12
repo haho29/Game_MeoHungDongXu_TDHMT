@@ -1,8 +1,8 @@
 #ifndef VATTHE_H
 #define VATTHE_H
 
-void veDongXu(int x, int y);
-void veBom(int x, int y);
-void veXuongCa(int x, int y);
+void veDongXu(int x, int y, int banKinh, int diemCong);
+void veBom(int x, int y, double scale);
+void veXuongCa(int x, int y, double angle);
 
 #endif

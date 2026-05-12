@@ -97,20 +97,26 @@ void hienThiManHinhKetThuc(struct GiaoDien_State* state, int trang, bool isNewHi
     }
     
     // 6. CUTE CAT WINKING (Ben phai)
-    int orange = COLOR(240, 160, 50);
-    int pink = COLOR(250, 150, 150);
-    int black = COLOR(0, 0, 0);
+    int catPink = COLOR(245, 194, 231);
+    int catDarkPink = COLOR(243, 139, 168); // Nose and inner ear
+    int black = COLOR(17, 17, 27);
     int cx = 510, cy = 350;
     
-    // Tai
+    // Tai (Ears)
     for(i=0; i<40; i++) {
-        veDuongThang(cx-50+i/2, cy-50-i, cx-10+i, cy-50, orange); 
-        veDuongThang(cx+50-i/2, cy-50-i, cx+10-i, cy-50, orange); 
+        veDuongThang(cx-50+i/2, cy-50-i, cx-10+i, cy-50, catPink); 
+        veDuongThang(cx+50-i/2, cy-50-i, cx+10-i, cy-50, catPink); 
     }
-    // Mat cat
-    my_bar(cx-60, cy-40, cx+60, cy+40, orange);
-    my_bar(cx-70, cy-20, cx+70, cy+20, orange);
-    my_bar(cx-40, cy-60, cx+40, cy+60, orange);
+    // Tai trong (Inner ears)
+    for(i=0; i<20; i++) {
+        veDuongThang(cx-40+i/2, cy-50-i, cx-20+i, cy-50, catDarkPink);
+        veDuongThang(cx+40-i/2, cy-50-i, cx+20-i, cy-50, catDarkPink);
+    }
+    
+    // Mat cat (Face)
+    my_bar(cx-60, cy-40, cx+60, cy+40, catPink);
+    my_bar(cx-70, cy-20, cx+70, cy+20, catPink);
+    my_bar(cx-40, cy-60, cx+40, cy+60, catPink);
     
     // Phan trang tren mieng
     my_bar(cx-45, cy, cx+45, cy+50, white);
@@ -126,11 +132,11 @@ void hienThiManHinhKetThuc(struct GiaoDien_State* state, int trang, bool isNewHi
     veDuongThang(cx+15, cy-4, cx+35, cy-4, black); 
     
     // Mui
-    my_bar(cx-10, cy+5, cx+10, cy+15, pink);
+    my_bar(cx-10, cy+5, cx+10, cy+15, catDarkPink);
     
     // Mieng cuoi (chu V rong)
     my_bar(cx-20, cy+25, cx+20, cy+45, black);
-    my_bar(cx-15, cy+35, cx+15, cy+45, pink); // luoi
+    my_bar(cx-15, cy+35, cx+15, cy+45, catDarkPink); // luoi
     
     // Ria mep
     veDuongThang(cx-80, cy+10, cx-50, cy+5, black);

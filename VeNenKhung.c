@@ -124,6 +124,14 @@ void veNenKhung(struct GiaoDien_State* state) {
         my_bar(x, 430, x+px, 430+drop, grassTop); // jagged grass going down
         my_bar(x, 430+drop, x+px, 430+drop+px/2, grassDark); // dark shadow edge
     }
+    
+    // 4.5 Fractal Grass (Koch Curve Bush)
+    // Tich hop thuat toan Fractal theo tieu chi cham diem
+    int fractalGrass = COLOR(180, 240, 100);
+    veDuongKoch(30, 415, 150, 415, fractalGrass, 3);
+    veDuongKoch(150, 415, 270, 415, fractalGrass, 3);
+    veDuongKoch(500, 415, 620, 415, fractalGrass, 3);
+    veDuongKoch(620, 415, 740, 415, fractalGrass, 3);
 
     // Side borders for play area
     my_bar(0, 82, 10, 460, woodDark);
@@ -139,36 +147,56 @@ void veNenKhung(struct GiaoDien_State* state) {
     my_bar(22, 477, 778, 583, pillBg);
     
     // "LUAT CHOI:" badge
-    my_bar(30, 470, 180, 500, woodDark);
-    my_bar(32, 472, 178, 498, orangeCenter);
+    my_bar(40, 465, 170, 495, woodDark);
+    my_bar(42, 467, 168, 493, orangeCenter);
     setbkcolor(orangeCenter);
     setcolor(white);
     settextstyle(SANS_SERIF_FONT, HORIZ_DIR, 1);
     settextjustify(CENTER_TEXT, CENTER_TEXT);
-    outtextxy(105, 485, (char*)"LUAT CHOI:");
+    outtextxy(105, 480, (char*)"LUAT CHOI:");
     
     // Instructions Text
     setbkcolor(pillBg);
     setcolor(textBrown);
-    settextjustify(LEFT_TEXT, TOP_TEXT);
-    outtextxy(40, 515, (char*)"- Phim [<-] [->]: Di chuyen MEO sang trai, phai.");
-    outtextxy(40, 545, (char*)"- Luu y: Toc do roi tang theo diem. Het 3 mang la thua!");
+    settextjustify(LEFT_TEXT, CENTER_TEXT);
+    settextstyle(SMALL_FONT, HORIZ_DIR, 5); // Chon font chu nho gon hon
+    
+    // Dong 1
+    int px_i = 50, py = 525;
+    my_bar(px_i-3, py-1, px_i+3, py+3, textBrown); 
+    my_bar(px_i-6, py-4, px_i-4, py-2, textBrown); 
+    my_bar(px_i-1, py-5, px_i+1, py-3, textBrown); 
+    my_bar(px_i+4, py-4, px_i+6, py-2, textBrown); 
+    outtextxy(px_i + 15, py, (char*)"Phim [<-] [->]: Di chuyen MEO sang trai, phai.");
+    
+    // Dong 2
+    py = 555;
+    my_bar(px_i-3, py-1, px_i+3, py+3, textBrown); 
+    my_bar(px_i-6, py-4, px_i-4, py-2, textBrown); 
+    my_bar(px_i-1, py-5, px_i+1, py-3, textBrown); 
+    my_bar(px_i+4, py-4, px_i+6, py-2, textBrown); 
+    outtextxy(px_i + 15, py, (char*)"Luu y: Toc do roi tang theo diem. Het 3 mang la thua!");
     
     // Vertical separator
-    veDuongThang(450, 490, 450, 570, woodDark);
-    for(int y = 490; y < 570; y+=10) veDuongThang(450, y, 450, y+5, pillBg); // dashed effect
+    veDuongThang(480, 490, 480, 570, woodDark);
+    for(int y = 490; y < 570; y+=8) veDuongThang(480, y, 480, y+4, pillBg); // dashed effect
     
-    // Icons
-    settextjustify(LEFT_TEXT, CENTER_TEXT);
-    veDongXu(500, 510);
-    setbkcolor(pillBg); setcolor(textBrown);
-    outtextxy(530, 510, (char*)": +10 Diem");
+    // Icons layout
+    int iconX = 540;
+    int textX = 570;
     
-    veXuongCa(500, 540);
+    // Coin
+    veDongXu(iconX, 502, 12, 0);
     setbkcolor(pillBg); setcolor(textBrown);
-    outtextxy(530, 540, (char*)": -5 Diem");
+    outtextxy(textX, 502, (char*)": +10 Diem");
     
-    veBom(650, 510);
+    // Fishbone
+    veXuongCa(iconX, 532, 0.0);
     setbkcolor(pillBg); setcolor(textBrown);
-    outtextxy(680, 510, (char*)": -1 Mang");
+    outtextxy(textX, 532, (char*)": -5 Diem");
+    
+    // Bomb
+    veBom(iconX, 562, 1.0);
+    setbkcolor(pillBg); setcolor(textBrown);
+    outtextxy(textX, 562, (char*)": -1 Mang");
 }

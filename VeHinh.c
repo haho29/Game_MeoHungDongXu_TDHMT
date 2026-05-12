@@ -208,3 +208,57 @@ void toMauDeQuy_Safe(int x, int y, int fill_color, int boundary_color, int depth
 void toMauDeQuy(int x, int y, int fill_color, int boundary_color) {
     toMauDeQuy_Safe(x, y, fill_color, boundary_color, 0);
 }
+
+// Thuat toan Fractal (Duong cong Koch)
+void veDuongKoch(int x1, int y1, int x2, int y2, int color, int depth) {
+    if (depth == 0) {
+        veDuongThang(x1, y1, x2, y2, color);
+    } else {
+        int dx = x2 - x1;
+        int dy = y2 - y1;
+        
+        // Diem chia 1/3
+        int p1x = x1 + dx / 3;
+        int p1y = y1 + dy / 3;
+        
+        // Diem chia 2/3
+        int p3x = x1 + 2 * dx / 3;
+        int p3y = y1 + 2 * dy / 3;
+        
+        // Diem nhon o giua (xoay -60 do de nhon len tren)
+        // vector v = (dx/3, dy/3)
+        // x' = x*cos(-60) - y*sin(-60) = x*0.5 + y*0.866
+        // y' = x*sin(-60) + y*cos(-60) = -x*0.866 + y*0.5
+        double cos60 = 0.5;
+        double sin60 = 0.86602540378; // sin(60 degree)
+        
+        double vx = dx / 3.0;
+        double vy = dy / 3.0;
+        
+        int p2x = p1x + (int)(vx * cos60 + vy * sin60);
+        int p2y = p1y + (int)(-vx * sin60 + vy * cos60);
+        
+        veDuongKoch(x1, y1, p1x, p1y, color, depth - 1);
+        veDuongKoch(p1x, p1y, p2x, p2y, color, depth - 1);
+        veDuongKoch(p2x, p2y, p3x, p3y, color, depth - 1);
+        veDuongKoch(p3x, p3y, x2, y2, color, depth - 1);
+    }
+}
+
+// Phep bien doi 2 chieu (Quay quanh tam)
+void PhepQuay2D(int *px, int *py, int cx, int cy, double angle) {
+    int dx = *px - cx;
+    int dy = *py - cy;
+    
+    *px = cx + (int)(dx * cos(angle) - dy * sin(angle));
+    *py = cy + (int)(dx * sin(angle) + dy * cos(angle));
+}
+
+// Phep bien doi 2 chieu (Co gian quanh tam)
+void PhepCoGian2D(int *px, int *py, int cx, int cy, double sx, double sy) {
+    int dx = *px - cx;
+    int dy = *py - cy;
+    
+    *px = cx + (int)(dx * sx);
+    *py = cy + (int)(dy * sy);
+}

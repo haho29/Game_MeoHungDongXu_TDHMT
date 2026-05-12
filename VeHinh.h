@@ -18,4 +18,13 @@ void veHinhElip(int xc, int yc, int rx, int ry, int color);
 // Recursive Boundary Fill algorithm
 void toMauDeQuy(int x, int y, int fill_color, int boundary_color);
 
+// Fractal Koch curve
+void veDuongKoch(int x1, int y1, int x2, int y2, int color, int depth);
+
+// 2D Rotation Transformation
+void PhepQuay2D(int *px, int *py, int cx, int cy, double angle);
+
+// 2D Scaling Transformation
+void PhepCoGian2D(int *px, int *py, int cx, int cy, double sx, double sy);
+
 #endif
