@@ -4,8 +4,8 @@
 CPP      = g++.exe
 CC       = gcc.exe
 WINDRES  = windres.exe
-OBJ      = main.o TraiTim.o Meo.o VatThe.o GiaoDien.o VeHinh.o
-LINKOBJ  = main.o TraiTim.o Meo.o VatThe.o GiaoDien.o VeHinh.o
+OBJ      = main.o TraiTim.o Meo.o VatThe.o GiaoDien.o VeHinh.o ManHinhBatDau.o VeNenKhung.o ManHinhKetThuc.o
+LINKOBJ  = main.o TraiTim.o Meo.o VatThe.o GiaoDien.o VeHinh.o ManHinhBatDau.o VeNenKhung.o ManHinhKetThuc.o
 LIBS     = -L"D:/App/DevC/Dev-Cpp/MinGW64/x86_64-w64-mingw32/lib32" -lbgi -lgdi32 -lcomdlg32 -luuid -loleaut32 -lole32 -lbgi -lgdi32 -luser32 -m32
 INCS     = -I"D:/App/DevC/Dev-Cpp/MinGW64/include" -I"D:/App/DevC/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include"
 CXXINCS  = -I"D:/App/DevC/Dev-Cpp/MinGW64/include" -I"D:/App/DevC/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include"
@@ -41,3 +41,12 @@ GiaoDien.o: GiaoDien.c
 
 VeHinh.o: VeHinh.c
 	$(CPP) -c VeHinh.c -o VeHinh.o $(CXXFLAGS)
+
+ManHinhBatDau.o: ManHinhBatDau.c
+	$(CPP) -c ManHinhBatDau.c -o ManHinhBatDau.o $(CXXFLAGS)
+
+VeNenKhung.o: VeNenKhung.c
+	$(CPP) -c VeNenKhung.c -o VeNenKhung.o $(CXXFLAGS)
+
+ManHinhKetThuc.o: ManHinhKetThuc.c
+	$(CPP) -c ManHinhKetThuc.c -o ManHinhKetThuc.o $(CXXFLAGS)
