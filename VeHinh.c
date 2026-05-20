@@ -317,3 +317,11 @@ void PhepCoGian2D(int *px, int *py, int cx, int cy, double sx, double sy) {
     *px = cx + (int)(dx * sx);
     *py = cy + (int)(dy * sy);
 }
+
+// Phep bien doi 2 chieu (Doi xung truc doc / Lat ngang)
+void PhepDoiXung2D(int *px, int *py, int cx, bool flipHorizontal) {
+    if (flipHorizontal) {
+        int dx = *px - cx;
+        *px = cx - dx; // Lat x qua cx
+    }
+}

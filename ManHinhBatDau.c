@@ -1,236 +1,189 @@
 #include "ManHinhBatDau.h"
 #include "VeHinh.h"
 #include "VatThe.h"
+#include "Meo.h"
 #include <graphics.h>
 #include <conio.h>
+#include <stdio.h>
 
-// Ve dau meo don gian
-void veDauMeoChibi(int x, int y) {
-    int catPink = COLOR(245, 194, 231);
-    int catDarkPink = COLOR(243, 139, 168); // Nose and inner ear
-    int white = COLOR(255, 255, 255);
-    int black = COLOR(17, 17, 27);
-    int i;
-
-    // Tai meo (Ears)
-    for(i=0; i<30; i++) {
-        veDuongThang(x-40+i/2, y-30-i, x-20+i, y-30, catPink); // Tai trai
-        veDuongThang(x+40-i/2, y-30-i, x+20-i, y-30, catPink); // Tai phai
+void docDataShop(int *skin, int *phuKien, int *xu) {
+    *skin = 0; *phuKien = 0; *xu = 0;
+    FILE *f = fopen("shop_data.txt", "r");
+    if(f) {
+        fscanf(f, "%d %d %d", xu, skin, phuKien);
+        fclose(f);
     }
-    // Tai trong (Inner ears)
-    for(i=0; i<15; i++) {
-        veDuongThang(x-30+i/2, y-30-i, x-20+i, y-30, catDarkPink);
-        veDuongThang(x+30-i/2, y-30-i, x+20-i, y-30, catDarkPink);
-    }
-    
-    // Mat cat (Face)
-    my_bar(x-40, y-30, x+40, y+30, catPink);
-    my_bar(x-50, y-20, x+50, y+20, catPink);
-    my_bar(x-30, y-40, x+30, y+40, catPink);
-    
-    // Phan trang tren mieng
-    my_bar(x-20, y, x+20, y+20, white);
-    my_bar(x-30, y+5, x+30, y+15, white);
-    
-    // Mat (Eyes)
-    my_bar(x-25, y-10, x-15, y+5, black);
-    my_bar(x+15, y-10, x+25, y+5, black);
-    // Diem sang trong mat (Highlights)
-    my_bar(x-20, y-8, x-16, y-3, white);
-    my_bar(x+20, y-8, x+24, y-3, white);
-    
-    // Mui (Nose)
-    my_bar(x-5, y+2, x+5, y+7, catDarkPink);
-    
-    // Ria mep (Whiskers)
-    veDuongThang(x-45, y+10, x-25, y+5, black);
-    veDuongThang(x-45, y+20, x-25, y+15, black);
-    veDuongThang(x+25, y+5, x+45, y+10, black);
-    veDuongThang(x+25, y+15, x+45, y+20, black);
 }
 
-int hienThiManHinhBatDau() {
-    int bgSky = COLOR(25, 15, 45); // Gameplay Sky Dark
-    int bgGrassTop = COLOR(50, 220, 0); // Gameplay Grass Top
-    int bgGrassDark = COLOR(0, 150, 0); // Gameplay Grass Dark
-    int fenceWood = COLOR(116, 70, 49); // Dirt color
-    int fenceLine = COLOR(85, 45, 30);  // Dirt dark color
+void luuDataShop(int skin, int phuKien, int xu) {
+    FILE *f = fopen("shop_data.txt", "w");
+    if(f) {
+        fprintf(f, "%d %d %d\n", xu, skin, phuKien);
+        fclose(f);
+    }
+}
+
+int hienThiManHinhBatDau(int *skin, int *phuKien, int *xu) {
+    docDataShop(skin, phuKien, xu);
     
-    int titleWood = COLOR(137, 180, 250); // Catppuccin Sapphire / Blueish pastel
+    int bgSky = COLOR(25, 15, 45); 
+    int bgGrassTop = COLOR(50, 220, 0); 
+    int bgGrassDark = COLOR(0, 150, 0); 
+    int fenceWood = COLOR(116, 70, 49); 
+    int fenceLine = COLOR(85, 45, 30);  
+    int titleWood = COLOR(137, 180, 250); 
     int titleShadow = COLOR(100, 130, 200);
-    
-    int btnYellow = COLOR(249, 226, 175); // Pastel Yellow
+    int btnYellow = COLOR(249, 226, 175); 
     int btnYellowShadow = COLOR(200, 180, 140);
-    int btnGreen = COLOR(166, 227, 161); // Pastel Green
+    int btnGreen = COLOR(166, 227, 161); 
     int btnGreenShadow = COLOR(130, 180, 120);
-    
-    int panelBg = COLOR(30, 30, 46); // Crust
-    int textBrown = COLOR(205, 214, 244); // Text white/blueish
-    int titleBlue = COLOR(245, 194, 231); // Pink text
+    int btnBlue = COLOR(137, 180, 250);
+    int btnBlueShadow = COLOR(100, 130, 200);
+    int panelBg = COLOR(30, 30, 46); 
+    int textBrown = COLOR(205, 214, 244); 
+    int titleBlue = COLOR(245, 194, 231); 
     int white = COLOR(255, 255, 255);
+    int goldGlow = COLOR(255, 215, 0); 
     
-    int selected = 0; // 0: Bat Dau, 2: Thoat
+    int selected = 0; // 0: Bat Dau, 1: Cua Hang, 2: Thoat
+    int inShop = 0;   // Trang thai trong cua hang
+    int shopSelect = 0; // 0: Mac dinh, 1: Vang(100), 2: Den(200), 3: Vuong mien(150), 4: Kinh(50)
+    
     int trang = 0;
     int i, px, py, x, y;
-    
-    // Biến lưu trạng thái thời gian thực cho sao lấp lánh
     static int starFrame = 0;
+    double t = 0.0;
     
+    // Gia ca
+    int priceSkinVang = 100, priceSkinDen = 200;
+    int priceCrown = 150, priceGlass = 50;
+    
+    // Trang thai mo khoa (De don gian, neu du tien cho phep deo, hoac chi dung `xu` tieu)
+    // De gian luoc, cu chon la tieu tien neu chua so huu. Ta kiem tra qua skin/phuKien hien tai,
+    // nhung neu ho doi lai mac dinh thi sao? Tot nhat ta chi kiem tra don gian.
+
     while (1) {
         setactivepage(trang);
+        t += 0.05;
         
-        // 1. SKY (Night sky with stars) - Phủ rộng 1000
+        // 1. SKY
         my_bar(0, 0, 1000, 350, bgSky);
-        
-        // Sao nhấp nháy tuần hoàn theo thời gian thực (Twinkling stars)
         starFrame++;
         for(x = 25; x < 980; x += 45) {
             for(y = 20; y < 270; y += 35) {
                 int phase = (x * 17 + y * 23 + starFrame) % 15;
-                if(phase < 2) {
-                    my_bar(x, y, x+3, y+3, white); // Sao sáng rực
-                } else if(phase < 5) {
-                    my_bar(x+1, y+1, x+2, y+2, COLOR(200, 200, 240)); // Sao mờ dịu
-                }
+                if(phase < 2) my_bar(x, y, x+3, y+3, white); 
+                else if(phase < 5) my_bar(x+1, y+1, x+2, y+2, COLOR(200, 200, 240)); 
             }
         }
         
-        // Vẽ Mặt Trăng Khuyết Lượng Giác Vàng Hoàng Kim (Golden Crescent Moon)
-        // Áp dụng giải thuật quét pixel đường tròn lồng nhau: dx^2 + dy^2 <= 40^2 cắt cdx^2 + cdy^2 > 38^2
         for(int dy = -40; dy <= 40; dy++) {
             for(int dx = -40; dx <= 40; dx++) {
                 if(dx*dx + dy*dy <= 40*40) {
-                    int cdx = dx + 15;
-                    int cdy = dy - 5;
+                    int cdx = dx + 15, cdy = dy - 5;
                     if(cdx*cdx + cdy*cdy > 38*38) {
-                        my_putpixel(850 + dx, 80 + dy, COLOR(254, 215, 0)); // Vàng hoàng kim
+                        my_putpixel(850 + dx, 80 + dy, COLOR(254, 215, 0)); 
                     }
                 }
             }
         }
         
-        // 2. FENCE (Dat mau go/dat) - Dịch xuống và phủ rộng 1000
+        // 2. FENCE
         for(i = -10; i < 1000; i += 40) {
             my_bar(i, 280, i+30, 400, fenceWood);
-            my_bar(i+5, 270, i+25, 280, fenceWood); // bo tron tren
+            my_bar(i+5, 270, i+25, 280, fenceWood); 
             veDuongThang(i+30, 280, i+30, 400, fenceLine);
         }
         
-        // 3. GRASS - Phủ rộng 1000
+        // 3. GRASS
         my_bar(0, 370, 1000, 700, bgGrassTop);
         for(px=20; px<1000; px+=40) {
             for(py=390; py<700; py+=30) {
-                if((px+py)%70 == 0) {
-                    my_bar(px, py, px+4, py+4, bgGrassDark);
-                }
+                if((px+py)%70 == 0) my_bar(px, py, px+4, py+4, bgGrassDark);
             }
         }
         
-        // 4. BIG CAT FACE - Căn giữa 1000
-        veDauMeoChibi(500, 270);
-        
-        // 5. TITLE BOARD - Bảng gỗ tiêu đề đa tầng sang trọng
-        my_bar(246, 24, 754, 134, COLOR(50, 30, 10)); // Đổ bóng gỗ tối bên dưới 3D
-        my_bar(250, 20, 750, 130, titleShadow);
-        my_bar(250, 15, 750, 120, titleWood);
-        // Đinh tán kim loại sang trọng
-        my_bar(260, 25, 270, 35, COLOR(50, 50, 70));
-        my_bar(730, 25, 740, 35, COLOR(50, 50, 70));
-        my_bar(260, 100, 270, 110, COLOR(50, 50, 70));
-        my_bar(730, 100, 740, 110, COLOR(50, 50, 70));
-        
-        setbkcolor(titleWood);
-        settextstyle(TRIPLEX_FONT, HORIZ_DIR, 6);
-        settextjustify(CENTER_TEXT, CENTER_TEXT);
-        // Chữ MEO đổ bóng sang trọng
-        setcolor(COLOR(50, 40, 20)); outtextxy(503, 53, (char*)"MEO");
-        setcolor(COLOR(255, 220, 50)); outtextxy(500, 50, (char*)"MEO");
-        
-        // Chữ HUNG DONG XU
-        settextstyle(SANS_SERIF_FONT, HORIZ_DIR, 4);
-        setcolor(COLOR(50, 40, 20)); outtextxy(503, 103, (char*)"HUNG DONG XU");
-        setcolor(titleBlue); outtextxy(500, 100, (char*)"HUNG DONG XU");
-        
-        // 6. BUTTONS - Căn giữa 1000 với hiệu ứng Hover chuột động tương tác
-        int btnYellowHover = COLOR(254, 240, 200); // Vàng sáng khi hover
-        int btnGreenHover = COLOR(190, 245, 185); // Xanh sáng khi hover
-        int goldGlow = COLOR(255, 215, 0); // Viền vàng hoàng kim phát sáng
-        
-        // Kiểm tra tương tác chuột
-        px = mousex();
-        py = mousey();
-        int hoverStart = (px >= 350 && px <= 650 && py >= 340 && py <= 400);
-        int hoverThoat = (px >= 400 && px <= 600 && py >= 420 && py <= 470);
-        
-        if (hoverStart) {
-            selected = 0; // Đồng bộ chuột sang phím bấm
-        } else if (hoverThoat) {
-            selected = 2; // Đồng bộ chuột sang phím bấm
-        }
-        
-        // NÚT BẮT ĐẦU (START BUTTON)
-        if (selected == 0) {
-            // Trạng thái hover/selected: Scale-up to hơn một chút và phát sáng viền vàng
-            my_bar(343, 333, 657, 407, goldGlow);
-            my_bar(345, 335, 655, 405, white);
-            my_bar(347, 337, 653, 403, hoverStart ? btnYellowHover : btnYellow);
-            setbkcolor(hoverStart ? btnYellowHover : btnYellow);
+        if(!inShop) {
+            // MEO DEMO MENU
+            veMeoCoPhuKien(500, 250, false, t, *skin, *phuKien, false);
+            
+            // TITLE
+            my_bar(246, 24, 754, 134, COLOR(50, 30, 10)); 
+            my_bar(250, 20, 750, 130, titleShadow);
+            my_bar(250, 15, 750, 120, titleWood);
+            my_bar(260, 25, 270, 35, COLOR(50, 50, 70)); my_bar(730, 25, 740, 35, COLOR(50, 50, 70));
+            my_bar(260, 100, 270, 110, COLOR(50, 50, 70)); my_bar(730, 100, 740, 110, COLOR(50, 50, 70));
+            
+            setbkcolor(titleWood); settextstyle(TRIPLEX_FONT, HORIZ_DIR, 6); settextjustify(CENTER_TEXT, CENTER_TEXT);
+            setcolor(COLOR(50, 40, 20)); outtextxy(503, 53, (char*)"MEO");
+            setcolor(COLOR(255, 220, 50)); outtextxy(500, 50, (char*)"MEO");
+            settextstyle(SANS_SERIF_FONT, HORIZ_DIR, 4);
+            setcolor(COLOR(50, 40, 20)); outtextxy(503, 103, (char*)"HUNG DONG XU");
+            setcolor(titleBlue); outtextxy(500, 100, (char*)"HUNG DONG XU");
+            
+            // HOVER
+            px = mousex(); py = mousey();
+            int hoverStart = (px >= 350 && px <= 650 && py >= 320 && py <= 380);
+            int hoverShop  = (px >= 350 && px <= 650 && py >= 400 && py <= 460);
+            int hoverThoat = (px >= 350 && px <= 650 && py >= 480 && py <= 540);
+            if(hoverStart) selected = 0; else if(hoverShop) selected = 1; else if(hoverThoat) selected = 2;
+            
+            // BUTTON BAT DAU
+            if(selected == 0) { my_bar(343, 313, 657, 387, goldGlow); my_bar(345, 315, 655, 385, white); my_bar(347, 317, 653, 383, btnYellow); }
+            else { my_bar(350, 325, 650, 385, btnYellowShadow); my_bar(350, 320, 650, 380, btnYellow); }
+            setbkcolor(btnYellow); setcolor(COLOR(50,20,10)); settextstyle(SANS_SERIF_FONT, HORIZ_DIR, 3); outtextxy(500, 350, (char*)"BAT DAU");
+            
+            // BUTTON CUA HANG
+            if(selected == 1) { my_bar(343, 393, 657, 467, goldGlow); my_bar(345, 395, 655, 465, white); my_bar(347, 397, 653, 463, btnBlue); }
+            else { my_bar(350, 405, 650, 465, btnBlueShadow); my_bar(350, 400, 650, 460, btnBlue); }
+            setbkcolor(btnBlue); setcolor(COLOR(50,20,10)); outtextxy(500, 430, (char*)"CUA HANG");
+            
+            // BUTTON THOAT
+            if(selected == 2) { my_bar(343, 473, 657, 547, goldGlow); my_bar(345, 475, 655, 545, white); my_bar(347, 477, 653, 543, btnGreen); }
+            else { my_bar(350, 485, 650, 545, btnGreenShadow); my_bar(350, 480, 650, 540, btnGreen); }
+            setbkcolor(btnGreen); setcolor(white); outtextxy(500, 510, (char*)"THOAT");
+            
         } else {
-            // Trạng thái bình thường có đổ bóng
-            my_bar(350, 345, 650, 405, btnYellowShadow);
-            my_bar(350, 340, 650, 400, btnYellow);
-            setbkcolor(btnYellow);
+            // TRONG CUA HANG
+            veMeoCoPhuKien(250, 450, false, t, *skin, *phuKien, false);
+            
+            my_bar(450, 50, 950, 650, COLOR(80, 50, 30)); 
+            my_bar(455, 55, 945, 645, COLOR(255, 240, 210)); 
+            
+            setbkcolor(COLOR(255, 240, 210)); setcolor(COLOR(50, 20, 10));
+            settextstyle(TRIPLEX_FONT, HORIZ_DIR, 4); settextjustify(CENTER_TEXT, CENTER_TEXT);
+            outtextxy(700, 100, (char*)"CUA HANG");
+            
+            char xuStr[50]; sprintf(xuStr, "Xu cua ban: %d", *xu);
+            settextstyle(SANS_SERIF_FONT, HORIZ_DIR, 2);
+            outtextxy(700, 140, xuStr);
+            
+            px = mousex(); py = mousey();
+            
+            // Cac mon do
+            char* items[] = {"Meo Mac Dinh", "Meo Muop Vang (100x)", "Meo Mun (200x)", "Bo Phu Kien Mac Dinh", "Vuong Mien (150x)", "Kinh Ram (50x)", "QUAY LAI"};
+            int ys[] = {200, 260, 320, 380, 440, 500, 580};
+            
+            for(i=0; i<7; i++) {
+                int isHover = (px >= 500 && px <= 900 && py >= ys[i]-25 && py <= ys[i]+25);
+                if(isHover) shopSelect = i;
+                
+                int bg = (shopSelect == i) ? goldGlow : white;
+                my_bar(500, ys[i]-20, 900, ys[i]+20, COLOR(150, 150, 150));
+                my_bar(500, ys[i]-22, 900, ys[i]+18, bg);
+                setbkcolor(bg); setcolor(COLOR(50,20,10));
+                
+                char textOut[50]; strcpy(textOut, items[i]);
+                if(i == 0 && *skin == 0) strcat(textOut, " [DANG DUNG]");
+                if(i == 1 && *skin == 1) strcat(textOut, " [DANG DUNG]");
+                if(i == 2 && *skin == 2) strcat(textOut, " [DANG DUNG]");
+                if(i == 3 && *phuKien == 0) strcat(textOut, " [DANG DUNG]");
+                if(i == 4 && *phuKien == 1) strcat(textOut, " [DANG DUNG]");
+                if(i == 5 && *phuKien == 2) strcat(textOut, " [DANG DUNG]");
+                
+                outtextxy(700, ys[i], textOut);
+            }
         }
-        setcolor(textBrown);
-        settextstyle(SANS_SERIF_FONT, HORIZ_DIR, 3);
-        settextjustify(CENTER_TEXT, CENTER_TEXT);
-        outtextxy(500, 370, (char*)"BAT DAU");
-        
-        // NÚT THOÁT (EXIT BUTTON)
-        if (selected == 2) {
-            // Trạng thái hover/selected: Scale-up to hơn một chút và phát sáng viền
-            my_bar(393, 413, 607, 477, goldGlow);
-            my_bar(395, 415, 605, 475, white);
-            my_bar(397, 417, 603, 473, hoverThoat ? btnGreenHover : btnGreen);
-            setbkcolor(hoverThoat ? btnGreenHover : btnGreen);
-        } else {
-            // Trạng thái bình thường có đổ bóng
-            my_bar(400, 425, 600, 475, btnGreenShadow);
-            my_bar(400, 420, 600, 470, btnGreen);
-            setbkcolor(btnGreen);
-        }
-        setcolor(white);
-        settextstyle(SANS_SERIF_FONT, HORIZ_DIR, 3);
-        settextjustify(CENTER_TEXT, CENTER_TEXT);
-        outtextxy(500, 445, (char*)"THOAT");
-        
-        // 7. INSTRUCTION PANEL - Căn giữa 1000
-        my_bar(250, 520, 750, 660, COLOR(210, 190, 160)); // Vien
-        my_bar(250, 515, 750, 655, panelBg); // Nen
-        
-        setbkcolor(panelBg);
-        setcolor(textBrown);
-        settextstyle(SANS_SERIF_FONT, HORIZ_DIR, 2);
-        settextjustify(CENTER_TEXT, CENTER_TEXT);
-        outtextxy(500, 535, (char*)"* HUONG DAN *");
-        
-        settextstyle(SANS_SERIF_FONT, HORIZ_DIR, 1);
-        outtextxy(500, 565, (char*)"Phim [TRAI] [PHAI] hoac di chuot de dieu khien");
-        outtextxy(500, 585, (char*)"meo hung cac vat pham roi tu tren cao xuong.");
-        
-        // Icons
-        settextjustify(LEFT_TEXT, CENTER_TEXT);
-        veDongXu(330, 625, 12, 0);
-        setbkcolor(panelBg); setcolor(textBrown);
-        outtextxy(350, 625, (char*)": +10 Diem");
-        
-        veXuongCa(470, 625, 0.0);
-        setbkcolor(panelBg); setcolor(textBrown);
-        outtextxy(490, 625, (char*)": -5 Diem");
-        
-        veBom(600, 625, 1.0);
-        setbkcolor(panelBg); setcolor(textBrown);
-        outtextxy(625, 625, (char*)": -1 Mang");
         
         setvisualpage(trang);
         trang = 1 - trang;
@@ -239,25 +192,55 @@ int hienThiManHinhBatDau() {
             int key = getch();
             if (key == 224) {
                 key = getch();
-                if (key == 72 || key == 80 || key == 75 || key == 77) {
-                    selected = (selected == 0) ? 2 : 0;
+                if(inShop) {
+                    if (key == 72) { shopSelect--; if(shopSelect < 0) shopSelect = 6; }
+                    if (key == 80) { shopSelect++; if(shopSelect > 6) shopSelect = 0; }
+                } else {
+                    if (key == 72) { selected--; if(selected < 0) selected = 2; }
+                    if (key == 80) { selected++; if(selected > 2) selected = 0; }
                 }
-            } else if (key == 13) { // Enter
-                if (selected == 0) return 1; // Bat dau
-                if (selected == 2) return 0; // Thoat
-            } else if (key == 27) { // ESC
-                return 0;
+            } else if (key == 13) { 
+                if(!inShop) {
+                    if (selected == 0) return 1; 
+                    if (selected == 1) inShop = 1;
+                    if (selected == 2) return 0; 
+                } else {
+                    if(shopSelect == 0) *skin = 0;
+                    else if(shopSelect == 1) { if(*xu >= 100 || *skin == 1) { if(*skin!=1) *xu -= 100; *skin = 1; } }
+                    else if(shopSelect == 2) { if(*xu >= 200 || *skin == 2) { if(*skin!=2) *xu -= 200; *skin = 2; } }
+                    else if(shopSelect == 3) *phuKien = 0;
+                    else if(shopSelect == 4) { if(*xu >= 150 || *phuKien == 1) { if(*phuKien!=1) *xu -= 150; *phuKien = 1; } }
+                    else if(shopSelect == 5) { if(*xu >= 50  || *phuKien == 2) { if(*phuKien!=2) *xu -= 50;  *phuKien = 2; } }
+                    else if(shopSelect == 6) { inShop = 0; luuDataShop(*skin, *phuKien, *xu); }
+                }
+            } else if (key == 27) { 
+                if(inShop) { inShop = 0; luuDataShop(*skin, *phuKien, *xu); }
+                else return 0;
             }
         }
         
         if (ismouseclick(WM_LBUTTONDOWN)) {
-            int mx, my;
-            getmouseclick(WM_LBUTTONDOWN, mx, my);
-            clearmouseclick(WM_LBUTTONDOWN);
-            if (mx >= 350 && mx <= 650 && my >= 340 && my <= 400) return 1; // BAT DAU
-            if (mx >= 400 && mx <= 600 && my >= 420 && my <= 470) return 0; // THOAT
+            int mx, my; getmouseclick(WM_LBUTTONDOWN, mx, my); clearmouseclick(WM_LBUTTONDOWN);
+            if(!inShop) {
+                if (mx >= 350 && mx <= 650 && my >= 320 && my <= 380) return 1;
+                if (mx >= 350 && mx <= 650 && my >= 400 && my <= 460) inShop = 1;
+                if (mx >= 350 && mx <= 650 && my >= 480 && my <= 540) return 0;
+            } else {
+                int ys[] = {200, 260, 320, 380, 440, 500, 580};
+                for(i=0; i<7; i++) {
+                    if(mx >= 500 && mx <= 900 && my >= ys[i]-25 && my <= ys[i]+25) {
+                        if(i == 0) *skin = 0;
+                        else if(i == 1) { if(*xu >= 100 || *skin == 1) { if(*skin!=1) *xu -= 100; *skin = 1; } }
+                        else if(i == 2) { if(*xu >= 200 || *skin == 2) { if(*skin!=2) *xu -= 200; *skin = 2; } }
+                        else if(i == 3) *phuKien = 0;
+                        else if(i == 4) { if(*xu >= 150 || *phuKien == 1) { if(*phuKien!=1) *xu -= 150; *phuKien = 1; } }
+                        else if(i == 5) { if(*xu >= 50  || *phuKien == 2) { if(*phuKien!=2) *xu -= 50;  *phuKien = 2; } }
+                        else if(i == 6) { inShop = 0; luuDataShop(*skin, *phuKien, *xu); }
+                    }
+                }
+            }
         }
         
-        delay(50);
+        delay(30);
     }
 }

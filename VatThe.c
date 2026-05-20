@@ -153,3 +153,59 @@ void veXuongCa(int x, int y, double angle) {
     int tx = x + 9, ty = y + 9; PhepQuay2D(&tx, &ty, x, y, angle);
     my_bar(tx - 1, ty - 1, tx + 1, ty + 1, shadowCol); // Fill tail roughly
 }
+
+void veKhiNangLuong(int x, int y, double angle, double scale) {
+    int coreCol = COLOR(180, 240, 255);
+    int auraCol1 = COLOR(100, 200, 255);
+    int auraCol2 = COLOR(50, 150, 255);
+    
+    int p1x, p1y, p2x, p2y;
+    
+    // Lõi phát sáng
+    int rCore = (int)(8 * scale);
+    veDuongTron(x, y, rCore, coreCol);
+    toMauDeQuy(x, y, coreCol, coreCol);
+    
+    // Vòng năng lượng xoay
+    for(int i = 0; i < 4; i++) {
+        double currentAngle = angle + i * 1.5708; // 90 do
+        p1x = x + (int)(15 * scale); p1y = y;
+        p2x = x; p2y = y + (int)(15 * scale);
+        
+        PhepQuay2D(&p1x, &p1y, x, y, currentAngle);
+        PhepQuay2D(&p2x, &p2y, x, y, currentAngle);
+        
+        veDuongTron(p1x, p1y, (int)(3 * scale), auraCol1);
+        toMauDeQuy(p1x, p1y, auraCol1, auraCol1);
+        
+        veDuongTron(p2x, p2y, (int)(2 * scale), auraCol2);
+        toMauDeQuy(p2x, p2y, auraCol2, auraCol2);
+    }
+}
+
+void veNamCham(int x, int y, double angle) {
+    int redU = COLOR(220, 50, 50);
+    int grayPole = COLOR(200, 200, 200);
+    
+    int p1x, p1y, p2x, p2y;
+    
+    // Ve hinh chu U cua nam cham (Ve bang cac doan thang day dac de lap day khoang trong do toMauDeQuy hoi kho dung neu xoay)
+    // De gian luoc va an toan khi xoay, ta ve bang tap hop cac diem
+    for(int i = -10; i <= 10; i++) {
+        for(int j = -12; j <= 5; j++) {
+            // Tao hinh chu U
+            if(i < -4 || i > 4 || j > 0) {
+                if(i >= -10 && i <= 10 && j >= -12 && j <= 12) {
+                    p1x = x + i; p1y = y + j;
+                    PhepQuay2D(&p1x, &p1y, x, y, angle);
+                    
+                    if(j > 5) {
+                        my_putpixel(p1x, p1y, grayPole); // Cuc tu
+                    } else {
+                        my_putpixel(p1x, p1y, redU); // Than nam cham
+                    }
+                }
+            }
+        }
+    }
+}

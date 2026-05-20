@@ -28,4 +28,7 @@ void PhepQuay2D(int *px, int *py, int cx, int cy, double angle);
 // 2D Scaling Transformation
 void PhepCoGian2D(int *px, int *py, int cx, int cy, double sx, double sy);
 
+// 2D Reflection Transformation (Horizontal)
+void PhepDoiXung2D(int *px, int *py, int cx, bool flipHorizontal);
+
 #endif

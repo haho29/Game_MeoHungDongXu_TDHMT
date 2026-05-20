@@ -105,13 +105,17 @@ int main() {
     // =================================================
     while (true) {
 
+        int skin = 0, phuKien = 0, xu = 0;
         // Hien thi man hinh bat dau
-        int chonBatDau = hienThiManHinhBatDau();
+        int chonBatDau = hienThiManHinhBatDau(&skin, &phuKien, &xu);
 
         // Neu chon thoat
         if (chonBatDau == 0) {
             break;
         }
+
+        // Khoi tao state cua game
+        initGiaoDien(&gdien, skin, phuKien, xu);
 
         // Chay game
         playGiaoDien(&gdien);
