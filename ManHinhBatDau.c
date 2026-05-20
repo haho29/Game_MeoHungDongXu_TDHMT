@@ -73,112 +73,164 @@ int hienThiManHinhBatDau() {
     int trang = 0;
     int i, px, py, x, y;
     
+    // Biến lưu trạng thái thời gian thực cho sao lấp lánh
+    static int starFrame = 0;
+    
     while (1) {
         setactivepage(trang);
         
-        // 1. SKY (Night sky with stars)
-        my_bar(0, 0, 800, 300, bgSky);
-        // Sao nhap nhay
-        for(x = 20; x < 800; x += 30) {
-            for(y = 20; y < 230; y += 40) {
-                if((x+y)%7 == 0 && rand()%10 > 2) my_bar(x, y, x+2, y+2, white);
+        // 1. SKY (Night sky with stars) - Phủ rộng 1000
+        my_bar(0, 0, 1000, 350, bgSky);
+        
+        // Sao nhấp nháy tuần hoàn theo thời gian thực (Twinkling stars)
+        starFrame++;
+        for(x = 25; x < 980; x += 45) {
+            for(y = 20; y < 270; y += 35) {
+                int phase = (x * 17 + y * 23 + starFrame) % 15;
+                if(phase < 2) {
+                    my_bar(x, y, x+3, y+3, white); // Sao sáng rực
+                } else if(phase < 5) {
+                    my_bar(x+1, y+1, x+2, y+2, COLOR(200, 200, 240)); // Sao mờ dịu
+                }
             }
         }
         
-        // 2. FENCE (Dat mau go/dat)
-        for(i = -10; i < 800; i += 40) {
-            my_bar(i, 230, i+30, 350, fenceWood);
-            my_bar(i+5, 220, i+25, 230, fenceWood); // bo tron tren
-            veDuongThang(i+30, 230, i+30, 350, fenceLine);
+        // Vẽ Mặt Trăng Khuyết Lượng Giác Vàng Hoàng Kim (Golden Crescent Moon)
+        // Áp dụng giải thuật quét pixel đường tròn lồng nhau: dx^2 + dy^2 <= 40^2 cắt cdx^2 + cdy^2 > 38^2
+        for(int dy = -40; dy <= 40; dy++) {
+            for(int dx = -40; dx <= 40; dx++) {
+                if(dx*dx + dy*dy <= 40*40) {
+                    int cdx = dx + 15;
+                    int cdy = dy - 5;
+                    if(cdx*cdx + cdy*cdy > 38*38) {
+                        my_putpixel(850 + dx, 80 + dy, COLOR(254, 215, 0)); // Vàng hoàng kim
+                    }
+                }
+            }
         }
         
-        // 3. GRASS
-        my_bar(0, 320, 800, 600, bgGrassTop);
-        for(px=20; px<800; px+=40) {
-            for(py=340; py<600; py+=30) {
+        // 2. FENCE (Dat mau go/dat) - Dịch xuống và phủ rộng 1000
+        for(i = -10; i < 1000; i += 40) {
+            my_bar(i, 280, i+30, 400, fenceWood);
+            my_bar(i+5, 270, i+25, 280, fenceWood); // bo tron tren
+            veDuongThang(i+30, 280, i+30, 400, fenceLine);
+        }
+        
+        // 3. GRASS - Phủ rộng 1000
+        my_bar(0, 370, 1000, 700, bgGrassTop);
+        for(px=20; px<1000; px+=40) {
+            for(py=390; py<700; py+=30) {
                 if((px+py)%70 == 0) {
                     my_bar(px, py, px+4, py+4, bgGrassDark);
                 }
             }
         }
         
-        // 4. BIG CAT FACE
-        veDauMeoChibi(400, 220);
+        // 4. BIG CAT FACE - Căn giữa 1000
+        veDauMeoChibi(500, 270);
         
-        // 5. TITLE BOARD
-        my_bar(150, 20, 650, 130, titleShadow);
-        my_bar(150, 15, 650, 120, titleWood);
-        // Dinh tan tren bang go
-        my_bar(160, 25, 170, 35, titleShadow);
-        my_bar(630, 25, 640, 35, titleShadow);
-        my_bar(160, 100, 170, 110, titleShadow);
-        my_bar(630, 100, 640, 110, titleShadow);
+        // 5. TITLE BOARD - Bảng gỗ tiêu đề đa tầng sang trọng
+        my_bar(246, 24, 754, 134, COLOR(50, 30, 10)); // Đổ bóng gỗ tối bên dưới 3D
+        my_bar(250, 20, 750, 130, titleShadow);
+        my_bar(250, 15, 750, 120, titleWood);
+        // Đinh tán kim loại sang trọng
+        my_bar(260, 25, 270, 35, COLOR(50, 50, 70));
+        my_bar(730, 25, 740, 35, COLOR(50, 50, 70));
+        my_bar(260, 100, 270, 110, COLOR(50, 50, 70));
+        my_bar(730, 100, 740, 110, COLOR(50, 50, 70));
         
         setbkcolor(titleWood);
         settextstyle(TRIPLEX_FONT, HORIZ_DIR, 6);
         settextjustify(CENTER_TEXT, CENTER_TEXT);
-        // Chu MEO
-        setcolor(white); outtextxy(402, 52, (char*)"MEO");
-        setcolor(COLOR(255, 220, 50)); outtextxy(400, 50, (char*)"MEO");
+        // Chữ MEO đổ bóng sang trọng
+        setcolor(COLOR(50, 40, 20)); outtextxy(503, 53, (char*)"MEO");
+        setcolor(COLOR(255, 220, 50)); outtextxy(500, 50, (char*)"MEO");
         
-        // Chu HUNG DONG XU
+        // Chữ HUNG DONG XU
         settextstyle(SANS_SERIF_FONT, HORIZ_DIR, 4);
-        setcolor(white); outtextxy(402, 102, (char*)"HUNG DONG XU");
-        setcolor(titleBlue); outtextxy(400, 100, (char*)"HUNG DONG XU");
+        setcolor(COLOR(50, 40, 20)); outtextxy(503, 103, (char*)"HUNG DONG XU");
+        setcolor(titleBlue); outtextxy(500, 100, (char*)"HUNG DONG XU");
         
-        // 6. BUTTONS
-        // BAT DAU
-        if (selected == 0) {
-            my_bar(245, 295, 555, 365, white);
-            my_bar(250, 300, 550, 360, btnYellow);
-        } else {
-            my_bar(250, 305, 550, 365, btnYellowShadow);
-            my_bar(250, 300, 550, 360, btnYellow);
+        // 6. BUTTONS - Căn giữa 1000 với hiệu ứng Hover chuột động tương tác
+        int btnYellowHover = COLOR(254, 240, 200); // Vàng sáng khi hover
+        int btnGreenHover = COLOR(190, 245, 185); // Xanh sáng khi hover
+        int goldGlow = COLOR(255, 215, 0); // Viền vàng hoàng kim phát sáng
+        
+        // Kiểm tra tương tác chuột
+        px = mousex();
+        py = mousey();
+        int hoverStart = (px >= 350 && px <= 650 && py >= 340 && py <= 400);
+        int hoverThoat = (px >= 400 && px <= 600 && py >= 420 && py <= 470);
+        
+        if (hoverStart) {
+            selected = 0; // Đồng bộ chuột sang phím bấm
+        } else if (hoverThoat) {
+            selected = 2; // Đồng bộ chuột sang phím bấm
         }
-        setbkcolor(btnYellow);
+        
+        // NÚT BẮT ĐẦU (START BUTTON)
+        if (selected == 0) {
+            // Trạng thái hover/selected: Scale-up to hơn một chút và phát sáng viền vàng
+            my_bar(343, 333, 657, 407, goldGlow);
+            my_bar(345, 335, 655, 405, white);
+            my_bar(347, 337, 653, 403, hoverStart ? btnYellowHover : btnYellow);
+            setbkcolor(hoverStart ? btnYellowHover : btnYellow);
+        } else {
+            // Trạng thái bình thường có đổ bóng
+            my_bar(350, 345, 650, 405, btnYellowShadow);
+            my_bar(350, 340, 650, 400, btnYellow);
+            setbkcolor(btnYellow);
+        }
         setcolor(textBrown);
         settextstyle(SANS_SERIF_FONT, HORIZ_DIR, 3);
-        outtextxy(400, 330, (char*)"BAT DAU");
+        settextjustify(CENTER_TEXT, CENTER_TEXT);
+        outtextxy(500, 370, (char*)"BAT DAU");
         
-        // THOAT (Thay chuc nang cho nut Huong Dan xanh la)
+        // NÚT THOÁT (EXIT BUTTON)
         if (selected == 2) {
-            my_bar(295, 375, 505, 435, white);
-            my_bar(300, 380, 500, 430, btnGreen);
+            // Trạng thái hover/selected: Scale-up to hơn một chút và phát sáng viền
+            my_bar(393, 413, 607, 477, goldGlow);
+            my_bar(395, 415, 605, 475, white);
+            my_bar(397, 417, 603, 473, hoverThoat ? btnGreenHover : btnGreen);
+            setbkcolor(hoverThoat ? btnGreenHover : btnGreen);
         } else {
-            my_bar(300, 385, 500, 435, btnGreenShadow);
-            my_bar(300, 380, 500, 430, btnGreen);
+            // Trạng thái bình thường có đổ bóng
+            my_bar(400, 425, 600, 475, btnGreenShadow);
+            my_bar(400, 420, 600, 470, btnGreen);
+            setbkcolor(btnGreen);
         }
-        setbkcolor(btnGreen);
         setcolor(white);
         settextstyle(SANS_SERIF_FONT, HORIZ_DIR, 3);
-        outtextxy(400, 405, (char*)"THOAT");
+        settextjustify(CENTER_TEXT, CENTER_TEXT);
+        outtextxy(500, 445, (char*)"THOAT");
         
-        // 7. INSTRUCTION PANEL
-        my_bar(150, 460, 650, 580, COLOR(210, 190, 160)); // Vien
-        my_bar(150, 455, 650, 575, panelBg); // Nen
+        // 7. INSTRUCTION PANEL - Căn giữa 1000
+        my_bar(250, 520, 750, 660, COLOR(210, 190, 160)); // Vien
+        my_bar(250, 515, 750, 655, panelBg); // Nen
         
         setbkcolor(panelBg);
         setcolor(textBrown);
         settextstyle(SANS_SERIF_FONT, HORIZ_DIR, 2);
-        outtextxy(400, 475, (char*)"* HUONG DAN *");
+        settextjustify(CENTER_TEXT, CENTER_TEXT);
+        outtextxy(500, 535, (char*)"* HUONG DAN *");
         
         settextstyle(SANS_SERIF_FONT, HORIZ_DIR, 1);
-        outtextxy(400, 500, (char*)"Phim [TRAI] [PHAI] hoac di chuot de dieu khien");
-        outtextxy(400, 520, (char*)"meo hung cac vat pham roi tu tren cao xuong.");
+        outtextxy(500, 565, (char*)"Phim [TRAI] [PHAI] hoac di chuot de dieu khien");
+        outtextxy(500, 585, (char*)"meo hung cac vat pham roi tu tren cao xuong.");
         
         // Icons
         settextjustify(LEFT_TEXT, CENTER_TEXT);
-        veDongXu(230, 555, 12, 0);
+        veDongXu(330, 625, 12, 0);
         setbkcolor(panelBg); setcolor(textBrown);
-        outtextxy(250, 555, (char*)": +10 Diem");
+        outtextxy(350, 625, (char*)": +10 Diem");
         
-        veXuongCa(370, 555, 0.0);
+        veXuongCa(470, 625, 0.0);
         setbkcolor(panelBg); setcolor(textBrown);
-        outtextxy(390, 555, (char*)": -5 Diem");
+        outtextxy(490, 625, (char*)": -5 Diem");
         
-        veBom(500, 555, 1.0);
+        veBom(600, 625, 1.0);
         setbkcolor(panelBg); setcolor(textBrown);
-        outtextxy(525, 555, (char*)": -1 Mang");
+        outtextxy(625, 625, (char*)": -1 Mang");
         
         setvisualpage(trang);
         trang = 1 - trang;
@@ -202,8 +254,8 @@ int hienThiManHinhBatDau() {
             int mx, my;
             getmouseclick(WM_LBUTTONDOWN, mx, my);
             clearmouseclick(WM_LBUTTONDOWN);
-            if (mx >= 250 && mx <= 550 && my >= 300 && my <= 360) return 1; // BAT DAU
-            if (mx >= 300 && mx <= 500 && my >= 380 && my <= 430) return 0; // THOAT
+            if (mx >= 350 && mx <= 650 && my >= 340 && my <= 400) return 1; // BAT DAU
+            if (mx >= 400 && mx <= 600 && my >= 420 && my <= 470) return 0; // THOAT
         }
         
         delay(50);

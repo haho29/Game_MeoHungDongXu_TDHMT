@@ -4,6 +4,7 @@
 #include <stdbool.h>
 
 // Ham ho tro to mau (thay the bar de dong bo vram)
+void my_putpixel(int x, int y, int color);
 void my_bar(int left, int top, int right, int bottom, int color);
 
 // Bresenham algorithm for lines

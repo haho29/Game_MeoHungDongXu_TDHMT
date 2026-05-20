@@ -9,12 +9,14 @@ struct VatTheRoi {
     bool active;
 };
 
+#define SO_VAT_THE 8
+
 struct GiaoDien_State {
     int diem;
     int mang;
     int caoNhat;
     int meoX, meoY;
-    struct VatTheRoi cacVatThe[5]; // Mang chua cac vat the roi
+    struct VatTheRoi cacVatThe[SO_VAT_THE]; // Mang chua cac vat the roi
     bool gameOver;
 };
 
