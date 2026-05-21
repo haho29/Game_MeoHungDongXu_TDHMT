@@ -40,6 +40,7 @@ void initGiaoDien(struct GiaoDien_State* state, int skin, int phuKien, int xu) {
     state->tongXuTichLuy = xu;
     state->khienBaoVe = 0;
     state->thoiGianNamCham = 0;
+    state->thoiGianCham = 0;
     
     state->gameOver = false;
     
@@ -117,6 +118,7 @@ void capNhatVatThe(struct GiaoDien_State* state) {
     int i;
     int tocDo = 5 + (state->diem / 50); 
     if(tocDo > 18) tocDo = 18; 
+    if(state->thoiGianCham > 0) tocDo = tocDo / 2 + 1; // Làm chậm 50% khi ăn đồng hồ
 
     for(i = 0; i < SO_VAT_THE; i++) {
         if(state->cacVatThe[i].active) {
@@ -154,14 +156,15 @@ void capNhatVatThe(struct GiaoDien_State* state) {
                 state->cacVatThe[i].y = 75;
                 
                 int r = rand() % 1000;
-                // Ti le moi: Xu=55%, Bom=25%, Xuong=13%, Khien=3%, NamCham=3%, Tim=1%
+                // Ti le moi: Xu=55%, Bom=20%, Xuong=13%, Khien=3%, NamCham=3%, Tim=1%, DongHo=5%
                 if(r < 300) state->cacVatThe[i].loai = 0;      
                 else if(r < 450) state->cacVatThe[i].loai = 3; 
                 else if(r < 550) state->cacVatThe[i].loai = 4; 
                 else if(r < 680) state->cacVatThe[i].loai = 2; // Xuong ca
-                else if(r < 930) state->cacVatThe[i].loai = 1; // Bom
-                else if(r < 960) state->cacVatThe[i].loai = 6; // Khien
-                else if(r < 990) state->cacVatThe[i].loai = 7; // Nam cham
+                else if(r < 880) state->cacVatThe[i].loai = 1; // Bom
+                else if(r < 910) state->cacVatThe[i].loai = 6; // Khien
+                else if(r < 940) state->cacVatThe[i].loai = 7; // Nam cham
+                else if(r < 990) state->cacVatThe[i].loai = 8; // Dong ho
                 else state->cacVatThe[i].loai = 5;             // Tim
             }
         }
@@ -219,6 +222,11 @@ void xuLyVaCham(struct GiaoDien_State* state) {
                 } else if(vType == 7) { // Nam cham
                     state->thoiGianNamCham = 150; // 150 khung hinh
                     taoChuNoi(state, state->meoX, state->meoY - 40, "HUT XU", COLOR(255, 100, 100));
+                } else if(vType == 8) { // Dong ho
+                    state->thoiGianCham = 200; // 200 khung hinh
+                    taoChuNoi(state, state->meoX, state->meoY - 40, "CHAM LAI", COLOR(50, 150, 255));
+                    taoHatBo(state, state->meoX, state->meoY, 15, COLOR(50, 150, 255), COLOR(200, 255, 255));
+                    playSoundEffect("shield_up.wav", "slowSound", 800, 100);
                 }
             }
         }
@@ -311,6 +319,7 @@ void playGiaoDien(struct GiaoDien_State* state) {
 
         state->playTimeSec += 0.03;
         if(state->thoiGianNamCham > 0) state->thoiGianNamCham--;
+        if(state->thoiGianCham > 0) state->thoiGianCham--;
 
         // Xu ly di chuyen muot voi GetAsyncKeyState (Phim Mui Ten)
         if(GetAsyncKeyState(VK_LEFT) & 0x8000) {
@@ -368,6 +377,10 @@ void playGiaoDien(struct GiaoDien_State* state) {
                 else if(type == 7) {
                     double angle = sin(state->playTimeSec * 5) * 0.5;
                     veNamCham(vx, vy, angle);
+                }
+                else if(type == 8) {
+                    double angle = state->playTimeSec * 2.0;
+                    veDongHo(vx, vy, angle);
                 }
             }
         }

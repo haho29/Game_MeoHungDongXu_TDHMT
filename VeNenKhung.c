@@ -168,6 +168,23 @@ void veNenKhung(struct GiaoDien_State* state) {
     veDuongKoch(690, 515, 830, 515, fractalGrass, 3);
     veDuongKoch(830, 515, 970, 515, fractalGrass, 3);
 
+    // =========================================================================
+    // 4.6 Hieu ung Dom Dom (Fireflies) tren bai co
+    // =========================================================================
+    for(int f = 0; f < 15; f++) {
+        double fTime = state->playTimeSec + f * 10.0;
+        int fx = 50 + ((f * 137 + (int)(40 * sin(fTime * 0.5))) % 900);
+        int fy = 450 + (int)(30 * sin(fTime * 0.8 + f)) + (f*15 % 50);
+        int fPhase = ((int)(fTime * 10) + f * 5) % 20;
+        
+        if (fPhase < 12) { // Nhap nhay
+            int glow = 150 + fPhase * 8;
+            if(glow > 255) glow = 255;
+            my_bar(fx, fy, fx + 2, fy + 2, COLOR(glow, 255, 100)); // Màu xanh vàng của đom đóm
+            my_bar(fx-1, fy+1, fx+3, fy+1, COLOR(100, 200, 50)); // Hào quang nhẹ
+        }
+    }
+
     // Side borders for play area
     my_bar(0, 82, 10, 560, woodDark);
     my_bar(990, 82, 1000, 560, woodDark);

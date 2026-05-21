@@ -48,9 +48,11 @@ void veMeoCoPhuKien(int x, int y, bool quayTrai, double timeSec, int skinLoai, i
     int color = COLOR(245, 194, 231); // Pastel Pink (Default)
     if(skinLoai == 1) color = COLOR(249, 168, 70); // Mướp vàng
     if(skinLoai == 2) color = COLOR(40, 40, 45);   // Mun đen
+    if(skinLoai == 3) color = COLOR(250, 250, 255); // Mèo trắng
 
     int eyeColor = COLOR(17, 17, 27); // Dark
     if(skinLoai == 2) eyeColor = COLOR(255, 215, 0); // Mắt vàng cho mèo đen
+    if(skinLoai == 3) eyeColor = COLOR(50, 150, 255); // Mắt xanh cho mèo trắng
     int noseColor = COLOR(243, 139, 168); // Soft Red
     
     // Tinh toan nhun nhay (Squash & Stretch) khi di chuyen
@@ -169,7 +171,7 @@ void veMeoCoPhuKien(int x, int y, bool quayTrai, double timeSec, int skinLoai, i
     DRAW_LINE_T(x + 17, dy - 25, x + 26, dy - 27, eyeColor);
     DRAW_LINE_T(x + 18, dy - 22, x + 27, dy - 22, eyeColor);
 
-    // 8. Phu kien: Vuong Mien
+    // 8. Phu kien: Vuong Mien hoac No Do
     if(accessoryLoai == 1) {
         int crownCol = COLOR(255, 215, 0);
         int cwY = dy - 52 + (int)(3 * sin(timeSec * 5.0)); 
@@ -181,6 +183,23 @@ void veMeoCoPhuKien(int x, int y, bool quayTrai, double timeSec, int skinLoai, i
         DRAW_LINE_T(x + 5, cwY - 4, x + 12, cwY - 10, crownCol);
         DRAW_LINE_T(x + 12, cwY - 10, x + 10, cwY, crownCol);
         FILL_T(x, cwY - 3, crownCol, crownCol);
+    }
+    else if(accessoryLoai == 3) { // No do (Red Bow tie)
+        int bowCol = COLOR(220, 30, 50);
+        
+        DRAW_LINE_T(x - 10, dy - 15, x - 10, dy - 5, bowCol);
+        DRAW_LINE_T(x - 10, dy - 15, x, dy - 10, bowCol);
+        DRAW_LINE_T(x - 10, dy - 5, x, dy - 10, bowCol);
+        FILL_T(x - 6, dy - 10, bowCol, bowCol);
+        
+        DRAW_LINE_T(x + 10, dy - 15, x + 10, dy - 5, bowCol);
+        DRAW_LINE_T(x + 10, dy - 15, x, dy - 10, bowCol);
+        DRAW_LINE_T(x + 10, dy - 5, x, dy - 10, bowCol);
+        FILL_T(x + 6, dy - 10, bowCol, bowCol);
+        
+        int cx = x, cy = dy - 10; TRANSFORM_PT(cx, cy);
+        veDuongTron(cx, cy, 3, bowCol);
+        toMauDeQuy(cx, cy, bowCol, bowCol);
     }
     
     // 9. Ve Khiên Bảo Vệ

@@ -166,6 +166,12 @@ int hienThiManHinhBatDau(int *skin, int *phuKien, int *xu) {
                 if (selected == 1) return 0; 
             } else if (key == 27) { 
                 return 0;
+            } else if (key == 's' || key == 'S') {
+                *skin = (*skin + 1) % 4; // 0, 1, 2, 3
+                luuDataShop(*skin, *phuKien, *xu);
+            } else if (key == 'a' || key == 'A') {
+                *phuKien = (*phuKien + 1) % 4; // 0: None, 1: Crown, 2: Glasses, 3: Bow
+                luuDataShop(*skin, *phuKien, *xu);
             }
         }
         

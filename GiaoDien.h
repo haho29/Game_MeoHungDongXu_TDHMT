@@ -5,7 +5,7 @@
 
 struct VatTheRoi {
     int x, y;
-    int loai; // 0: Dong Xu, 1: Bom, 2: Xuong Ca, 3: Xu20, 4: Xu30, 5: Tim, 6: Khien, 7: NamCham
+    int loai; // 0: Dong Xu, 1: Bom, 2: Xuong Ca, 3: Xu20, 4: Xu30, 5: Tim, 6: Khien, 7: NamCham, 8: DongHo
     bool active;
 };
 
@@ -46,6 +46,7 @@ struct GiaoDien_State {
     int tongXuTichLuy;
     int khienBaoVe; // So luong khien dang co (max 1)
     int thoiGianNamCham; // So khung hinh con lai cua nam cham
+    int thoiGianCham; // So khung hinh con lai cua dong ho cham thoi gian
     double playTimeSec; // Thoi gian choi de tinh toan hoat anh
     
     struct VatTheRoi cacVatThe[SO_VAT_THE]; 
