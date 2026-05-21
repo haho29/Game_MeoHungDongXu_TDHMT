@@ -118,34 +118,38 @@ int hienThiManHinhBatDau(int *skin, int *phuKien, int *xu) {
         veMeoCoPhuKien(250, 480, false, t, *skin, *phuKien, false);
         
         // 5. TITLE (Ben phai)
-        my_bar(596, 76, 954, 204, COLOR(50, 30, 10)); 
-        my_bar(600, 72, 950, 200, titleShadow);
-        my_bar(600, 65, 950, 190, titleWood);
-        my_bar(610, 75, 620, 85, COLOR(50, 50, 70)); my_bar(930, 75, 940, 85, COLOR(50, 50, 70));
-        my_bar(610, 170, 620, 180, COLOR(50, 50, 70)); my_bar(930, 170, 940, 180, COLOR(50, 50, 70));
+        my_bar(596, 56, 954, 204, COLOR(50, 30, 10)); // Vien ngoai
+        my_bar(600, 60, 950, 200, titleShadow);       // Bong
+        my_bar(600, 53, 950, 190, titleWood);         // Nen go
+        my_bar(610, 65, 620, 75, COLOR(50, 50, 70)); my_bar(930, 65, 940, 75, COLOR(50, 50, 70)); // Dinh oc
+        my_bar(610, 168, 620, 178, COLOR(50, 50, 70)); my_bar(930, 168, 940, 178, COLOR(50, 50, 70));
         
-        setbkcolor(titleWood); settextstyle(TRIPLEX_FONT, HORIZ_DIR, 7); settextjustify(CENTER_TEXT, CENTER_TEXT);
-        setcolor(COLOR(50, 40, 20)); outtextxy(778, 113, (char*)"MEO");
-        setcolor(COLOR(255, 220, 50)); outtextxy(775, 110, (char*)"MEO");
-        settextstyle(SANS_SERIF_FONT, HORIZ_DIR, 4);
-        setcolor(COLOR(50, 40, 20)); outtextxy(778, 163, (char*)"HUNG DONG XU");
-        setcolor(titleBlue); outtextxy(775, 160, (char*)"HUNG DONG XU");
+        setbkcolor(titleWood); 
+        settextjustify(CENTER_TEXT, CENTER_TEXT);
+        
+        settextstyle(BOLD_FONT, HORIZ_DIR, 6); 
+        setcolor(COLOR(50, 40, 20)); outtextxy(778, 103, (char*)"MEO");
+        setcolor(COLOR(255, 220, 50)); outtextxy(775, 100, (char*)"MEO");
+        
+        settextstyle(BOLD_FONT, HORIZ_DIR, 3);
+        setcolor(COLOR(50, 40, 20)); outtextxy(777, 153, (char*)"HUNG DONG XU");
+        setcolor(titleBlue); outtextxy(775, 150, (char*)"HUNG DONG XU");
         
         // 6. BUTTONS & HOVER
         px = mousex(); py = mousey();
-        int hoverStart = (px >= 625 && px <= 925 && py >= 280 && py <= 360);
-        int hoverThoat = (px >= 625 && px <= 925 && py >= 400 && py <= 480);
+        int hoverStart = (px >= 625 && px <= 925 && py >= 270 && py <= 350);
+        int hoverThoat = (px >= 625 && px <= 925 && py >= 390 && py <= 470);
         if(hoverStart) selected = 0; else if(hoverThoat) selected = 1;
         
         // BUTTON BAT DAU
-        if(selected == 0) { my_bar(622, 277, 928, 363, goldGlow); my_bar(625, 280, 925, 360, white); my_bar(627, 282, 923, 358, btnYellow); }
-        else { my_bar(625, 290, 925, 360, btnYellowShadow); my_bar(625, 280, 925, 350, btnYellow); }
-        setbkcolor(btnYellow); setcolor(COLOR(50,20,10)); settextstyle(SANS_SERIF_FONT, HORIZ_DIR, 4); outtextxy(775, 320, (char*)"BAT DAU");
+        if(selected == 0) { my_bar(622, 267, 928, 353, goldGlow); my_bar(625, 270, 925, 350, white); my_bar(627, 272, 923, 348, btnYellow); }
+        else { my_bar(625, 280, 925, 350, btnYellowShadow); my_bar(625, 270, 925, 340, btnYellow); }
+        setbkcolor(btnYellow); setcolor(COLOR(50,20,10)); settextstyle(BOLD_FONT, HORIZ_DIR, 4); outtextxy(775, 310, (char*)"BAT DAU");
         
         // BUTTON THOAT
-        if(selected == 1) { my_bar(622, 397, 928, 483, goldGlow); my_bar(625, 400, 925, 480, white); my_bar(627, 402, 923, 478, btnGreen); }
-        else { my_bar(625, 410, 925, 480, btnGreenShadow); my_bar(625, 400, 925, 470, btnGreen); }
-        setbkcolor(btnGreen); setcolor(white); outtextxy(775, 440, (char*)"THOAT");
+        if(selected == 1) { my_bar(622, 387, 928, 473, goldGlow); my_bar(625, 390, 925, 470, white); my_bar(627, 392, 923, 468, btnGreen); }
+        else { my_bar(625, 400, 925, 470, btnGreenShadow); my_bar(625, 390, 925, 460, btnGreen); }
+        setbkcolor(btnGreen); setcolor(white); settextstyle(BOLD_FONT, HORIZ_DIR, 4); outtextxy(775, 430, (char*)"THOAT");
         
         setvisualpage(trang);
         trang = 1 - trang;
@@ -167,8 +171,8 @@ int hienThiManHinhBatDau(int *skin, int *phuKien, int *xu) {
         
         if (ismouseclick(WM_LBUTTONDOWN)) {
             int mx, my; getmouseclick(WM_LBUTTONDOWN, mx, my); clearmouseclick(WM_LBUTTONDOWN);
-            if (mx >= 625 && mx <= 925 && my >= 280 && my <= 360) return 1;
-            if (mx >= 625 && mx <= 925 && my >= 400 && my <= 480) return 0;
+            if (mx >= 625 && mx <= 925 && my >= 270 && my <= 350) return 1;
+            if (mx >= 625 && mx <= 925 && my >= 390 && my <= 470) return 0;
         }
         
         delay(30);

@@ -249,7 +249,7 @@ void capNhatVaVeHieuUng(struct GiaoDien_State* state) {
             else {
                 setbkcolor(COLOR(25, 15, 45)); // BG sky
                 setcolor(state->cacChuNoi[i].color);
-                settextstyle(SMALL_FONT, HORIZ_DIR, 5);
+                settextstyle(BOLD_FONT, HORIZ_DIR, 1);
                 settextjustify(CENTER_TEXT, CENTER_TEXT);
                 outtextxy(state->cacChuNoi[i].x, state->cacChuNoi[i].y, state->cacChuNoi[i].text);
             }
@@ -285,20 +285,23 @@ void playGiaoDien(struct GiaoDien_State* state) {
             veNenKhung(state); // Vẽ nền tĩnh
             
             // Vẽ lớp mờ & Chữ Pause sắc nét (Sử dụng outtextxy)
-            settextstyle(SANS_SERIF_FONT, HORIZ_DIR, 4);
             settextjustify(CENTER_TEXT, CENTER_TEXT);
             
             // Đổ bóng chữ
             setbkcolor(COLOR(25, 15, 45)); 
             setcolor(COLOR(50, 50, 50));
-            outtextxy(502, 352, "TAM DUNG");
-            outtextxy(502, 402, "Nhan 0 de tiep tuc");
+            settextstyle(BOLD_FONT, HORIZ_DIR, 5);
+            outtextxy(504, 354, "TAM DUNG");
+            settextstyle(BOLD_FONT, HORIZ_DIR, 2);
+            outtextxy(502, 412, "Nhan 0 de tiep tuc");
             
             // Chữ chính
             setcolor(COLOR(255, 215, 0));
+            settextstyle(BOLD_FONT, HORIZ_DIR, 5);
             outtextxy(500, 350, "TAM DUNG");
             setcolor(COLOR(255, 255, 255));
-            outtextxy(500, 400, "Nhan 0 de tiep tuc");
+            settextstyle(BOLD_FONT, HORIZ_DIR, 2);
+            outtextxy(500, 410, "Nhan 0 de tiep tuc");
             
             setvisualpage(trang);
             trang = 1 - trang;

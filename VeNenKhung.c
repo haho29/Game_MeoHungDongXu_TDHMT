@@ -35,10 +35,10 @@ void veNenKhung(struct GiaoDien_State* state) {
     my_bar(53, 23, 247, 57, pillBg);            // Mặt kén ngà
     setbkcolor(pillBg);
     sprintf(scoreStr, "DIEM: %d", state->diem);
-    settextstyle(SANS_SERIF_FONT, HORIZ_DIR, 2);
+    settextstyle(BOLD_FONT, HORIZ_DIR, 2);
     setcolor(COLOR(200, 50, 10)); // Màu đỏ thẫm sang trọng
     settextjustify(CENTER_TEXT, CENTER_TEXT);
-    outtextxy(150, 40, scoreStr);
+    outtextxy(150, 42, scoreStr);
     
     // Cao nhat (Right Pill) - Thiết kế 3D nổi bật
     my_bar(748, 18, 952, 62, COLOR(85, 45, 30)); // Đổ bóng gỗ tối 3D
@@ -46,10 +46,10 @@ void veNenKhung(struct GiaoDien_State* state) {
     my_bar(753, 23, 947, 57, pillBg);            // Mặt kén ngà
     setbkcolor(pillBg);
     sprintf(highScoreStr, "CAO NHAT: %d", state->caoNhat);
-    settextstyle(SANS_SERIF_FONT, HORIZ_DIR, 2);
+    settextstyle(BOLD_FONT, HORIZ_DIR, 2);
     setcolor(COLOR(200, 50, 10)); // Màu đỏ thẫm sang trọng
     settextjustify(CENTER_TEXT, CENTER_TEXT);
-    outtextxy(850, 40, highScoreStr);
+    outtextxy(850, 42, highScoreStr);
     
     // Center Title Block - Căn giữa màn hình 1000 với kén gỗ 3D
     my_bar(378, 0, 622, 72, COLOR(85, 45, 30)); // Đổ bóng gỗ
@@ -57,20 +57,20 @@ void veNenKhung(struct GiaoDien_State* state) {
     my_bar(384, 0, 616, 65, orangeCenter);
     setbkcolor(orangeCenter);
     setcolor(COLOR(85, 45, 30)); // Đổ bóng chữ tiêu đề
-    settextstyle(TRIPLEX_FONT, HORIZ_DIR, 4);
+    settextstyle(BOLD_FONT, HORIZ_DIR, 4);
     settextjustify(CENTER_TEXT, CENTER_TEXT);
-    outtextxy(502, 22, (char*)"CatCatch!");
+    outtextxy(502, 34, (char*)"CatCatch!");
     setcolor(textGold);
-    outtextxy(500, 20, (char*)"CatCatch!");
+    outtextxy(500, 32, (char*)"CatCatch!");
     
     // Mang (Lives HUD inside custom cute pink pill) - Kén hồng xinh xắn căng nét
     my_bar(410, 42, 590, 60, COLOR(50, 20, 10)); // Bóng kén
     my_bar(412, 40, 588, 58, COLOR(255, 235, 235)); // Nền kén hồng pastel ngọt ngào
     setbkcolor(COLOR(255, 235, 235));
     setcolor(COLOR(243, 139, 168)); // Màu hồng cánh sen ngọt ngào
-    settextstyle(SANS_SERIF_FONT, HORIZ_DIR, 1);
+    settextstyle(BOLD_FONT, HORIZ_DIR, 1);
     settextjustify(CENTER_TEXT, CENTER_TEXT);
-    outtextxy(445, 49, (char*)"MANG:");
+    outtextxy(445, 52, (char*)"MANG:");
     for(i = 0; i < state->mang; i++) {
         veTraiTim(485 + i * 20, 48); 
     }
@@ -182,19 +182,19 @@ void veNenKhung(struct GiaoDien_State* state) {
     my_bar(22, 577, 978, 683, pillBg);
     
     // "LUAT CHOI:" badge
-    my_bar(40, 565, 170, 595, woodDark);
-    my_bar(42, 567, 168, 593, orangeCenter);
+    my_bar(40, 565, 175, 595, woodDark);
+    my_bar(42, 567, 173, 593, orangeCenter);
     setbkcolor(orangeCenter);
     setcolor(white);
-    settextstyle(SANS_SERIF_FONT, HORIZ_DIR, 1);
+    settextstyle(BOLD_FONT, HORIZ_DIR, 1);
     settextjustify(CENTER_TEXT, CENTER_TEXT);
-    outtextxy(105, 580, (char*)"LUAT CHOI:");
+    outtextxy(107, 582, (char*)"LUAT CHOI:");
     
     // Instructions Text
     setbkcolor(pillBg);
     setcolor(textBrown);
     settextjustify(LEFT_TEXT, CENTER_TEXT);
-    settextstyle(SMALL_FONT, HORIZ_DIR, 5); // Chon font chu nho gon hon
+    settextstyle(BOLD_FONT, HORIZ_DIR, 1); 
     
     // Dong 1
     int px_i = 50, py = 615;
@@ -202,7 +202,7 @@ void veNenKhung(struct GiaoDien_State* state) {
     my_bar(px_i-6, py-4, px_i-4, py-2, textBrown); 
     my_bar(px_i-1, py-5, px_i+1, py-3, textBrown); 
     my_bar(px_i+4, py-4, px_i+6, py-2, textBrown); 
-    outtextxy(px_i + 15, py, (char*)"Phim [<-] [->]: Di chuyen MEO sang trai, phai.");
+    outtextxy(px_i + 15, py + 2, (char*)"Phim [<-] [->]: Di chuyen MEO sang trai, phai.");
     
     // Dong 2
     py = 645;
@@ -210,28 +210,28 @@ void veNenKhung(struct GiaoDien_State* state) {
     my_bar(px_i-6, py-4, px_i-4, py-2, textBrown); 
     my_bar(px_i-1, py-5, px_i+1, py-3, textBrown); 
     my_bar(px_i+4, py-4, px_i+6, py-2, textBrown); 
-    outtextxy(px_i + 15, py, (char*)"Luu y: Toc do roi tang theo diem. Het 3 mang la thua!");
+    outtextxy(px_i + 15, py + 2, (char*)"Luu y: Toc do tang theo diem. 3 mang la thua!");
     
     // Vertical separator
     veDuongThang(550, 590, 550, 670, woodDark);
     for(int y = 590; y < 670; y+=8) veDuongThang(550, y, 550, y+4, pillBg); // dashed effect
     
     // Icons layout
-    int iconX = 620;
-    int textX = 650;
+    int iconX = 580;
+    int textX = 610;
     
     // Coin
     veDongXu(iconX, 602, 12, 0);
     setbkcolor(pillBg); setcolor(textBrown);
-    outtextxy(textX, 602, (char*)": +10 Diem");
+    outtextxy(textX, 602 + 2, (char*)": +10 Diem");
     
     // Fishbone
     veXuongCa(iconX, 632, 0.0);
     setbkcolor(pillBg); setcolor(textBrown);
-    outtextxy(textX, 632, (char*)": -5 Diem");
+    outtextxy(textX, 632 + 2, (char*)": -5 Diem");
     
     // Bomb
     veBom(iconX, 662, 1.0);
     setbkcolor(pillBg); setcolor(textBrown);
-    outtextxy(textX, 662, (char*)": -1 Mang");
+    outtextxy(textX, 662 + 2, (char*)": -1 Mang");
 }
