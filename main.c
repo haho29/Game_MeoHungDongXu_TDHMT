@@ -92,7 +92,7 @@ int main() {
     struct GiaoDien_State gdien;
 
     // Tao cua so game
-    initwindow(1000, 700, "Meo Hung Dong Xu");
+    initwindow(1150, 750, "Meo Hung Dong Xu");
 
     // Delay tranh loi audio
     delay(500);

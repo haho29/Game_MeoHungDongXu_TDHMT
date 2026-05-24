@@ -25,9 +25,9 @@ void veNenKhung(struct GiaoDien_State* state) {
     int textGold = COLOR(255, 215, 0);
 
     // ===== 1. HEADER (y = 0 to 80) =====
-    my_bar(0, 0, 1000, 80, woodLight);
-    veDuongThang(0, 80, 1000, 80, woodDark);
-    veDuongThang(0, 81, 1000, 81, woodDark);
+    my_bar(0, 0, 1150, 80, woodLight);
+    veDuongThang(0, 80, 1150, 80, woodDark);
+    veDuongThang(0, 81, 1150, 81, woodDark);
     
     // Diem (Left Pill) - Thiết kế 3D nổi bật
     my_bar(48, 18, 252, 62, COLOR(85, 45, 30)); // Đổ bóng gỗ tối 3D
@@ -41,38 +41,38 @@ void veNenKhung(struct GiaoDien_State* state) {
     outtextxy(150, 42, scoreStr);
     
     // Cao nhat (Right Pill) - Thiết kế 3D nổi bật
-    my_bar(748, 18, 952, 62, COLOR(85, 45, 30)); // Đổ bóng gỗ tối 3D
-    my_bar(750, 20, 950, 60, woodDark);          // Viền gỗ ấm
-    my_bar(753, 23, 947, 57, pillBg);            // Mặt kén ngà
+    my_bar(898, 18, 1102, 62, COLOR(85, 45, 30)); // Đổ bóng gỗ tối 3D
+    my_bar(900, 20, 1100, 60, woodDark);          // Viền gỗ ấm
+    my_bar(903, 23, 1097, 57, pillBg);            // Mặt kén ngà
     setbkcolor(pillBg);
     sprintf(highScoreStr, "CAO NHAT: %d", state->caoNhat);
     settextstyle(BOLD_FONT, HORIZ_DIR, 2);
     setcolor(COLOR(200, 50, 10)); // Màu đỏ thẫm sang trọng
     settextjustify(CENTER_TEXT, CENTER_TEXT);
-    outtextxy(850, 42, highScoreStr);
+    outtextxy(1000, 42, highScoreStr);
     
-    // Center Title Block - Căn giữa màn hình 1000 với kén gỗ 3D
-    my_bar(378, 0, 622, 72, COLOR(85, 45, 30)); // Đổ bóng gỗ
-    my_bar(380, 0, 620, 70, woodDark); 
-    my_bar(384, 0, 616, 65, orangeCenter);
+    // Center Title Block - Căn giữa màn hình 1150 với kén gỗ 3D
+    my_bar(453, 0, 697, 72, COLOR(85, 45, 30)); // Đổ bóng gỗ
+    my_bar(455, 0, 695, 70, woodDark); 
+    my_bar(459, 0, 691, 65, orangeCenter);
     setbkcolor(orangeCenter);
     setcolor(COLOR(85, 45, 30)); // Đổ bóng chữ tiêu đề
     settextstyle(BOLD_FONT, HORIZ_DIR, 4);
     settextjustify(CENTER_TEXT, CENTER_TEXT);
-    outtextxy(502, 34, (char*)"CatCatch!");
+    outtextxy(577, 34, (char*)"CatCatch!");
     setcolor(textGold);
-    outtextxy(500, 32, (char*)"CatCatch!");
+    outtextxy(575, 32, (char*)"CatCatch!");
     
     // Mang (Lives HUD inside custom cute pink pill) - Kén hồng xinh xắn căng nét
-    my_bar(410, 42, 590, 60, COLOR(50, 20, 10)); // Bóng kén
-    my_bar(412, 40, 588, 58, COLOR(255, 235, 235)); // Nền kén hồng pastel ngọt ngào
+    my_bar(485, 42, 665, 60, COLOR(50, 20, 10)); // Bóng kén
+    my_bar(487, 40, 663, 58, COLOR(255, 235, 235)); // Nền kén hồng pastel ngọt ngào
     setbkcolor(COLOR(255, 235, 235));
     setcolor(COLOR(243, 139, 168)); // Màu hồng cánh sen ngọt ngào
     settextstyle(BOLD_FONT, HORIZ_DIR, 1);
     settextjustify(CENTER_TEXT, CENTER_TEXT);
-    outtextxy(445, 52, (char*)"MANG:");
+    outtextxy(520, 52, (char*)"MANG:");
     for(i = 0; i < state->mang; i++) {
-        veTraiTim(485 + i * 20, 48); 
+        veTraiTim(560 + i * 20, 48); 
     }
 
     // ===== 2. MAIN PLAY AREA (y = 82 to 560) =====
@@ -88,12 +88,12 @@ void veNenKhung(struct GiaoDien_State* state) {
     int x, y;
 
     // 1. Sky Base (Tim den dam)
-    my_bar(10, 82, 990, 515, skyDark); 
+    my_bar(10, 82, 1140, 515, skyDark); 
     
     // 2. Stars (Ngôi sao đêm lấp lánh động nhịp nhàng)
     static int playStarFrame = 0;
     playStarFrame++;
-    for(x = 25; x < 990; x += px*3) {
+    for(x = 25; x < 1140; x += px*3) {
         for(y = 100; y < 430; y += px*3) { // Giữ sao trên chân trời núi
             int h = (x*17 + y*31) % 100;
             if(h < 3) {
@@ -112,7 +112,7 @@ void veNenKhung(struct GiaoDien_State* state) {
                 int cdx = dx + 10;
                 int cdy = dy - 3;
                 if(cdx*cdx + cdy*cdy > 23*23) {
-                    my_putpixel(900 + dx, 150 + dy, COLOR(254, 215, 0)); // Màu vàng hoàng kim
+                    my_putpixel(1050 + dx, 150 + dy, COLOR(254, 215, 0)); // Màu vàng hoàng kim
                 }
             }
         }
@@ -121,7 +121,7 @@ void veNenKhung(struct GiaoDien_State* state) {
     // 2.5 PROCEDURAL GEOMETRIC MOUNTAINS (Dãy núi trùng điệp chân trời lượng giác)
     // Tự động quét và vẽ các đồi núi nhấp nhô vô cùng mềm mại tự nhiên dựa trên tổng hợp 3 tần số sóng lượng giác.
     // Tông màu tím sẫm huyền ảo tạo hiệu ứng xa xăm kỳ bí.
-    for(x = 10; x < 990; x++) {
+    for(x = 10; x < 1140; x++) {
         double wave1 = 15.0 * sin(x * 0.01);
         double wave2 = 8.0 * cos(x * 0.03);
         double wave3 = 10.0 * sin(x * 0.005 + 1.0);
@@ -135,8 +135,8 @@ void veNenKhung(struct GiaoDien_State* state) {
     }
 
     // 3. Ground Dirt Layer (y = 530 to 560)
-    my_bar(10, 530, 990, 560, dirtBg);
-    for(x = 10; x < 990; x += px) {
+    my_bar(10, 530, 1140, 560, dirtBg);
+    for(x = 10; x < 1140; x += px) {
         for(y = 530; y < 560; y += px) {
             int h = (x*17 + y*31) % 100;
             if(h < 15) my_bar(x, y, x+px, y+px, dirtLight);
@@ -145,8 +145,8 @@ void veNenKhung(struct GiaoDien_State* state) {
     }
     
     // 4. Grass Layer (y = 515 to 530)
-    my_bar(10, 515, 990, 530, grassTop);
-    for(x = 10; x < 990; x += px) {
+    my_bar(10, 515, 1140, 530, grassTop);
+    for(x = 10; x < 1140; x += px) {
         int drop = ((x/px)%2 == 0) ? px : 0;
         my_bar(x, 530, x+px, 530+drop, grassTop); // jagged grass going down
         my_bar(x, 530+drop, x+px, 530+drop+px/2, grassDark); // dark shadow edge
@@ -164,16 +164,16 @@ void veNenKhung(struct GiaoDien_State* state) {
     veDuongKoch(30, 515, 170, 515, fractalGrass, 3);
     veDuongKoch(170, 515, 310, 515, fractalGrass, 3);
     
-    // Vẽ bụi gai Fractal bên phải màn hình (Gồm 2 phân đoạn đối xứng từ x = 690 đến x = 970)
-    veDuongKoch(690, 515, 830, 515, fractalGrass, 3);
-    veDuongKoch(830, 515, 970, 515, fractalGrass, 3);
+    // Vẽ bụi gai Fractal bên phải màn hình (Gồm 2 phân đoạn đối xứng dịch chuyển từ x = 840 đến x = 1120)
+    veDuongKoch(840, 515, 980, 515, fractalGrass, 3);
+    veDuongKoch(980, 515, 1120, 515, fractalGrass, 3);
 
     // =========================================================================
     // 4.6 Hieu ung Dom Dom (Fireflies) tren bai co
     // =========================================================================
     for(int f = 0; f < 15; f++) {
         double fTime = state->playTimeSec + f * 10.0;
-        int fx = 50 + ((f * 137 + (int)(40 * sin(fTime * 0.5))) % 900);
+        int fx = 50 + ((f * 137 + (int)(40 * sin(fTime * 0.5))) % 1050);
         int fy = 450 + (int)(30 * sin(fTime * 0.8 + f)) + (f*15 % 50);
         int fPhase = ((int)(fTime * 10) + f * 5) % 20;
         
@@ -187,68 +187,120 @@ void veNenKhung(struct GiaoDien_State* state) {
 
     // Side borders for play area
     my_bar(0, 82, 10, 560, woodDark);
-    my_bar(990, 82, 1000, 560, woodDark);
+    my_bar(1140, 82, 1150, 560, woodDark);
 
-    // ===== 3. FOOTER (y = 560 to 700) =====
-    my_bar(0, 560, 1000, 700, woodLight);
-    veDuongThang(0, 560, 1000, 560, woodDark);
-    veDuongThang(0, 561, 1000, 561, woodDark);
+    // ===== 3. FOOTER (y = 560 to 750) =====
+    my_bar(0, 560, 1150, 750, woodLight);
+    veDuongThang(0, 560, 1150, 560, woodDark);
+    veDuongThang(0, 561, 1150, 561, woodDark);
     
     // Instruction Panel inside footer
-    my_bar(20, 575, 980, 685, woodDark);
-    my_bar(22, 577, 978, 683, pillBg);
+    my_bar(20, 575, 1130, 740, woodDark);
+    my_bar(22, 577, 1128, 738, pillBg);
     
     // "LUAT CHOI:" badge
-    my_bar(40, 565, 175, 595, woodDark);
-    my_bar(42, 567, 173, 593, orangeCenter);
+    my_bar(40, 565, 175, 593, woodDark);
+    my_bar(42, 567, 173, 591, orangeCenter);
     setbkcolor(orangeCenter);
     setcolor(white);
     settextstyle(BOLD_FONT, HORIZ_DIR, 1);
     settextjustify(CENTER_TEXT, CENTER_TEXT);
-    outtextxy(107, 582, (char*)"LUAT CHOI:");
+    outtextxy(107, 580, (char*)"LUAT CHOI:");
     
-    // Instructions Text
+    // Instructions Text (4 dong trai)
     setbkcolor(pillBg);
     setcolor(textBrown);
     settextjustify(LEFT_TEXT, CENTER_TEXT);
     settextstyle(BOLD_FONT, HORIZ_DIR, 1); 
     
-    // Dong 1
-    int px_i = 50, py = 615;
+    // Dong 1 (bat dau tu y=616 de co khoang trong duoi badge)
+    int px_i = 45, py = 616;
     my_bar(px_i-3, py-1, px_i+3, py+3, textBrown); 
     my_bar(px_i-6, py-4, px_i-4, py-2, textBrown); 
     my_bar(px_i-1, py-5, px_i+1, py-3, textBrown); 
     my_bar(px_i+4, py-4, px_i+6, py-2, textBrown); 
-    outtextxy(px_i + 15, py + 2, (char*)"Phim [<-] [->]: Di chuyen MEO sang trai, phai.");
+    outtextxy(px_i + 15, py + 2, (char*)"Phim [<-] [->]: Di chuyen MEO.");
     
     // Dong 2
-    py = 645;
+    py = 638;
     my_bar(px_i-3, py-1, px_i+3, py+3, textBrown); 
     my_bar(px_i-6, py-4, px_i-4, py-2, textBrown); 
     my_bar(px_i-1, py-5, px_i+1, py-3, textBrown); 
     my_bar(px_i+4, py-4, px_i+6, py-2, textBrown); 
-    outtextxy(px_i + 15, py + 2, (char*)"Luu y: Toc do tang theo diem. 3 mang la thua!");
+    outtextxy(px_i + 15, py + 2, (char*)"[0] Dung/Tiep, [1] Cham, [2] Nhanh, [3] Nhanh hon.");
     
-    // Vertical separator
-    veDuongThang(550, 590, 550, 670, woodDark);
-    for(int y = 590; y < 670; y+=8) veDuongThang(550, y, 550, y+4, pillBg); // dashed effect
+    // Dong 3
+    py = 660;
+    my_bar(px_i-3, py-1, px_i+3, py+3, textBrown); 
+    my_bar(px_i-6, py-4, px_i-4, py-2, textBrown); 
+    my_bar(px_i-1, py-5, px_i+1, py-3, textBrown); 
+    my_bar(px_i+4, py-4, px_i+6, py-2, textBrown); 
+    outtextxy(px_i + 15, py + 2, (char*)"3 mang la thua game! Thu thap tim de hoi sinh.");
     
-    // Icons layout
-    int iconX = 580;
-    int textX = 610;
+    // Dong 4
+    py = 682;
+    my_bar(px_i-3, py-1, px_i+3, py+3, textBrown); 
+    my_bar(px_i-6, py-4, px_i-4, py-2, textBrown); 
+    my_bar(px_i-1, py-5, px_i+1, py-3, textBrown); 
+    my_bar(px_i+4, py-4, px_i+6, py-2, textBrown); 
+    outtextxy(px_i + 15, py + 2, (char*)"Toc do roi tang theo diem. ESC de thoat game.");
     
-    // Coin
-    veDongXu(iconX, 602, 12, 0);
+    // ===== CHU THICH VAT THE (ben phai, separator x=700) =====
+    // Vertical separator dashed (dai xuong theo footer moi)
+    veDuongThang(698, 582, 698, 732, woodDark);
+    for(int y = 582; y < 732; y+=8) veDuongThang(698, y, 698, y+4, pillBg);
+
+    // "CHU THICH:" mini badge
+    my_bar(704, 565, 810, 591, woodDark);
+    my_bar(706, 567, 808, 589, orangeCenter);
+    setbkcolor(orangeCenter);
+    setcolor(white);
+    settextstyle(BOLD_FONT, HORIZ_DIR, 1);
+    settextjustify(CENTER_TEXT, CENTER_TEXT);
+    outtextxy(757, 579, (char*)"CHU THICH:");
+
+    // Icons: 6 items xep 2 cot, bat dau tu y=620 (co khoang trong duoi badge)
+    setbkcolor(pillBg);
+    setcolor(textBrown);
+    settextjustify(LEFT_TEXT, CENTER_TEXT);
+    settextstyle(BOLD_FONT, HORIZ_DIR, 1);
+
+    // --- COT TRAI (x=720) ---
+    int icL = 726; // icon center x trai
+    int txL = 743; // text x trai
+
+    // Dong xu (+diem)
+    veDongXu(icL, 622, 8, 0);
     setbkcolor(pillBg); setcolor(textBrown);
-    outtextxy(textX, 602 + 2, (char*)": +10 Diem");
-    
-    // Fishbone
-    veXuongCa(iconX, 632, 0.0);
+    outtextxy(txL, 622, (char*)": Cong diem");
+
+    // Xuong ca (-diem)
+    veXuongCa(icL, 652, 0.0);
     setbkcolor(pillBg); setcolor(textBrown);
-    outtextxy(textX, 632 + 2, (char*)": -5 Diem");
-    
-    // Bomb
-    veBom(iconX, 662, 1.0);
+    outtextxy(txL, 652, (char*)": Tru diem");
+
+    // Bom (-mang)
+    veBom(icL, 683, 0.65);
     setbkcolor(pillBg); setcolor(textBrown);
-    outtextxy(textX, 662 + 2, (char*)": -1 Mang");
+    outtextxy(txL, 683, (char*)": Mat 1 mang");
+
+    // --- COT PHAI (x=900) ---
+    int icR = 906; // icon center x phai
+    int txR = 923; // text x phai
+
+    // Nam cham (hut xu)
+    veNamCham(icR, 622, 0.0);
+    setbkcolor(pillBg); setcolor(textBrown);
+    outtextxy(txR, 622, (char*)": Hut dong xu");
+
+    // Khien bao ve
+    double kAngle = 0.0, kScale = 1.0;
+    veKhiNangLuong(icR, 652, kAngle, kScale);
+    setbkcolor(pillBg); setcolor(textBrown);
+    outtextxy(txR, 652, (char*)": Khien bao ve");
+
+    // Dong ho (lam cham)
+    veDongHo(icR, 683, 0.0);
+    setbkcolor(pillBg); setcolor(textBrown);
+    outtextxy(txR, 683, (char*)": Lam cham roi");
 }

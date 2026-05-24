@@ -150,7 +150,7 @@ void capNhatVatThe(struct GiaoDien_State* state) {
             }
             
             if(!tooCloseVertically && rand() % 100 < 8) { 
-                int spawnedX = 40 + rand() % 920; 
+                int spawnedX = 40 + rand() % 1070; 
                 state->cacVatThe[i].active = true;
                 state->cacVatThe[i].x = spawnedX;
                 state->cacVatThe[i].y = 75;
@@ -187,7 +187,7 @@ void xuLyVaCham(struct GiaoDien_State* state) {
                     char s[10]; sprintf(s, "+%d", d);
                     taoChuNoi(state, state->meoX, state->meoY - 40, s, COLOR(255, 215, 0));
                     taoHatBo(state, state->meoX, state->meoY, 10, COLOR(255, 215, 0), COLOR(255, 255, 200));
-                    playSoundEffect("coin.wav", "coinSound", 1000 + d*10, 50);
+                    playSoundEffect("coin_1.wav", "coinSound", 1000 + d*10, 50);
                     
                 } else if(vType == 1) { // Bom
                     if(state->khienBaoVe > 0) {
@@ -339,7 +339,7 @@ void playGiaoDien(struct GiaoDien_State* state) {
         
         state->meoX_d += state->meoVx;
         if(state->meoX_d < 40) { state->meoX_d = 40; state->meoVx = 0; }
-        if(state->meoX_d > 960) { state->meoX_d = 960; state->meoVx = 0; }
+        if(state->meoX_d > 1110) { state->meoX_d = 1110; state->meoVx = 0; }
         state->meoX = (int)state->meoX_d;
 
         setactivepage(trang);

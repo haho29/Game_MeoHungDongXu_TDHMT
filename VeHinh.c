@@ -4,17 +4,17 @@
 #include <stdlib.h>
 
 // VRAM ao de giai quyet loi getpixel khong hoat dong tren hidden buffer cua WinBGIm
-int vram[1000][700] = {0};
+int vram[1150][700] = {0};
 
 void my_putpixel(int x, int y, int color) {
-    if (x >= 0 && x < 1000 && y >= 0 && y < 700) {
+    if (x >= 0 && x < 1150 && y >= 0 && y < 700) {
         vram[x][y] = color;
         putpixel(x, y, color);
     }
 }
 
 int my_getpixel(int x, int y) {
-    if (x >= 0 && x < 1000 && y >= 0 && y < 700) {
+    if (x >= 0 && x < 1150 && y >= 0 && y < 700) {
         return vram[x][y];
     }
     return 0; // BLACK
@@ -24,7 +24,7 @@ void my_bar(int left, int top, int right, int bottom, int color) {
     setfillstyle(SOLID_FILL, color);
     bar(left, top, right, bottom);
     for (int x = left; x <= right; x++) {
-        if (x < 0 || x >= 1000) continue;
+        if (x < 0 || x >= 1150) continue;
         for (int y = top; y <= bottom; y++) {
             if (y < 0 || y >= 700) continue;
             vram[x][y] = color;
@@ -223,8 +223,8 @@ void veHinhElip(int xc, int yc, int rx, int ry, int color) {
 
 // Hàm hỗ trợ đệ quy an toàn tránh tràn ngăn xếp (Stack Overflow)
 void toMauDeQuy_Safe(int x, int y, int fill_color, int boundary_color, int depth) {
-    // Trường hợp biên 1: Vượt ngoài giới hạn màn hình (1000x700) -> Dừng loang
-    if(x < 0 || y < 0 || x >= 1000 || y >= 700) return;
+    // Trường hợp biên 1: Vượt ngoài giới hạn màn hình (1150x700) -> Dừng loang
+    if(x < 0 || y < 0 || x >= 1150 || y >= 700) return;
     
     // Trường hợp biên 2: Giới hạn độ sâu đệ quy để tránh tràn bộ nhớ ngăn xếp (Stack Overflow)
     // Hệ thống dùng VRAM ảo đọc ghi cực nhanh nên giới hạn 15000 là tối ưu và an toàn tuyệt đối.

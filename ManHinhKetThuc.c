@@ -23,84 +23,84 @@ void hienThiManHinhKetThuc(struct GiaoDien_State* state, int trang, bool isNewHi
     char highScoreStr[20];
     int i;
     
-    // 1. CONFETTI (Phao giay) - Phủ rộng 1000x700
+    // 1. CONFETTI (Phao giay) - Phủ rộng 1150x700
     int colors[] = {COLOR(255, 50, 50), COLOR(50, 255, 50), COLOR(50, 150, 255), COLOR(255, 255, 50), COLOR(255, 150, 50)};
     for(i=0; i<50; i++) {
-        int cx = (i * 83) % 1000;
+        int cx = (i * 83) % 1150;
         int cy = (i * 101) % 700;
         int col = colors[i % 5];
         my_bar(cx, cy, cx+8, cy+8, col);
     }
     
-    // 2. MAIN PANEL - Căn giữa 1000
-    my_bar(250, 245, 750, 535, textBrown); // Vien
-    my_bar(255, 250, 745, 530, panelBg);   // Nen
+    // 2. MAIN PANEL - Căn giữa 1150
+    my_bar(325, 245, 825, 535, textBrown); // Vien
+    my_bar(330, 250, 820, 530, panelBg);   // Nen
     
-    // 3. CROWN (Vuong mien tren panel) - Căn giữa 1000
-    my_bar(450, 230, 550, 245, gold); // De vuong mien
-    my_bar(450, 200, 465, 230, gold); // Gai trai
-    my_bar(490, 190, 510, 230, gold); // Gai giua
-    my_bar(535, 200, 550, 230, gold); // Gai phai
+    // 3. CROWN (Vuong mien tren panel) - Căn giữa 1150
+    my_bar(525, 230, 625, 245, gold); // De vuong mien
+    my_bar(525, 200, 540, 230, gold); // Gai trai
+    my_bar(565, 190, 585, 230, gold); // Gai giua
+    my_bar(610, 200, 625, 230, gold); // Gai phai
     // Ngoc tren vuong mien
-    my_bar(453, 195, 462, 205, redRibbon);
-    my_bar(495, 185, 505, 195, scoreBlue);
-    my_bar(538, 195, 547, 205, redRibbon);
+    my_bar(528, 195, 537, 205, redRibbon);
+    my_bar(570, 185, 580, 195, scoreBlue);
+    my_bar(613, 195, 622, 205, redRibbon);
     
-    // 4. RED RIBBON - Căn giữa 1000
+    // 4. RED RIBBON - Căn giữa 1150
     // Duoi ruy bang
-    my_bar(290, 160, 400, 210, redRibbonDark); 
-    my_bar(600, 160, 710, 210, redRibbonDark);
+    my_bar(365, 160, 475, 210, redRibbonDark); 
+    my_bar(675, 160, 785, 210, redRibbonDark);
     // Than ruy bang
-    my_bar(320, 140, 680, 200, redRibbon);
+    my_bar(395, 140, 755, 200, redRibbon);
     
     // Text "KET THUC"
     setbkcolor(redRibbon);
     setcolor(gold);
     settextstyle(TRIPLEX_FONT, HORIZ_DIR, 6);
     settextjustify(CENTER_TEXT, CENTER_TEXT);
-    outtextxy(502, 177, (char*)"KET THUC");
+    outtextxy(577, 177, (char*)"KET THUC");
     setcolor(COLOR(255, 255, 150)); // Sang bong
-    outtextxy(500, 175, (char*)"KET THUC");
+    outtextxy(575, 175, (char*)"KET THUC");
     
     // 5. SCORE BOXES (Ben trai)
     // Box 1: Diem vua choi
-    my_bar(280, 290, 480, 370, textBrown); // Shadow/Border
-    my_bar(282, 292, 478, 368, boxBg);
+    my_bar(355, 290, 555, 370, textBrown); // Shadow/Border
+    my_bar(357, 292, 553, 368, boxBg);
     setbkcolor(boxBg);
     setcolor(textBrown);
     settextstyle(SANS_SERIF_FONT, HORIZ_DIR, 1);
-    outtextxy(380, 310, (char*)"DIEM VUA CHOI");
+    outtextxy(455, 310, (char*)"DIEM VUA CHOI");
     setcolor(scoreBlue);
     settextstyle(SANS_SERIF_FONT, HORIZ_DIR, 4);
     sprintf(scoreStr, "%d", state->diem);
-    outtextxy(380, 340, scoreStr);
+    outtextxy(455, 340, scoreStr);
     
     // Box 2: Ky luc
-    my_bar(280, 400, 480, 480, textBrown); // Shadow/Border
-    my_bar(282, 402, 478, 478, boxBg);
+    my_bar(355, 400, 555, 480, textBrown); // Shadow/Border
+    my_bar(357, 402, 553, 478, boxBg);
     setbkcolor(boxBg);
     setcolor(textBrown);
     settextstyle(SANS_SERIF_FONT, HORIZ_DIR, 1);
-    outtextxy(380, 420, (char*)"KY LUC");
+    outtextxy(455, 420, (char*)"KY LUC");
     setcolor(scoreRed);
     settextstyle(SANS_SERIF_FONT, HORIZ_DIR, 4);
     sprintf(highScoreStr, "%d", state->caoNhat);
-    outtextxy(380, 450, highScoreStr);
+    outtextxy(455, 450, highScoreStr);
     
     // Tem "MOI!" neu pha ky luc
     if(isNewHigh) {
-        my_bar(450, 430, 510, 460, redRibbon);
+        my_bar(525, 430, 585, 460, redRibbon);
         setbkcolor(redRibbon);
         setcolor(white);
         settextstyle(SANS_SERIF_FONT, HORIZ_DIR, 1);
-        outtextxy(480, 445, (char*)"MOI!");
+        outtextxy(555, 445, (char*)"MOI!");
     }
     
-    // 6. CUTE CAT WINKING (Ben phai) - Căn giữa 1000
+    // 6. CUTE CAT WINKING (Ben phai) - Căn giữa 1150
     int catPink = COLOR(245, 194, 231);
     int catDarkPink = COLOR(243, 139, 168); // Nose and inner ear
     int black = COLOR(17, 17, 27);
-    int cx = 610, cy = 400;
+    int cx = 685, cy = 400;
     
     // Tai (Ears)
     for(i=0; i<40; i++) {
@@ -149,7 +149,7 @@ void hienThiManHinhKetThuc(struct GiaoDien_State* state, int trang, bool isNewHi
     setbkcolor(bgPlay); // Dung mau nen the hien o duoi
     setcolor(white);
     settextstyle(SANS_SERIF_FONT, HORIZ_DIR, 1);
-    outtextxy(500, 580, (char*)"[ Nhan Phim / Chuot de tiep tuc ]");
+    outtextxy(575, 580, (char*)"[ Nhan Phim / Chuot de tiep tuc ]");
 
     setvisualpage(trang);
     
