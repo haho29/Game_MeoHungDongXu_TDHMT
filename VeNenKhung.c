@@ -29,45 +29,45 @@ void veNenKhung(struct GiaoDien_State* state) {
     veDuongThang(0, 80, 1150, 80, woodDark);
     veDuongThang(0, 81, 1150, 81, woodDark);
     
-    // Diem (Left Pill) - Thiết kế 3D nổi bật
-    my_bar(48, 18, 252, 62, COLOR(85, 45, 30)); // Đổ bóng gỗ tối 3D
-    my_bar(50, 20, 250, 60, woodDark);          // Viền gỗ ấm
-    my_bar(53, 23, 247, 57, pillBg);            // Mặt kén ngà
+    // Diem (Left Pill)
+    my_bar(48, 18, 252, 62, COLOR(85, 45, 30)); 
+    my_bar(50, 20, 250, 60, woodDark);          
+    my_bar(53, 23, 247, 57, pillBg);            
     setbkcolor(pillBg);
     sprintf(scoreStr, "DIEM: %d", state->diem);
     settextstyle(BOLD_FONT, HORIZ_DIR, 2);
-    setcolor(COLOR(200, 50, 10)); // Màu đỏ thẫm sang trọng
+    setcolor(COLOR(200, 50, 10)); 
     settextjustify(CENTER_TEXT, CENTER_TEXT);
     outtextxy(150, 42, scoreStr);
     
-    // Cao nhat (Right Pill) - Thiết kế 3D nổi bật
-    my_bar(898, 18, 1102, 62, COLOR(85, 45, 30)); // Đổ bóng gỗ tối 3D
-    my_bar(900, 20, 1100, 60, woodDark);          // Viền gỗ ấm
-    my_bar(903, 23, 1097, 57, pillBg);            // Mặt kén ngà
+    // Cao nhat (Right Pill) 
+    my_bar(898, 18, 1102, 62, COLOR(85, 45, 30)); 
+    my_bar(900, 20, 1100, 60, woodDark);          
+    my_bar(903, 23, 1097, 57, pillBg);            
     setbkcolor(pillBg);
     sprintf(highScoreStr, "CAO NHAT: %d", state->caoNhat);
     settextstyle(BOLD_FONT, HORIZ_DIR, 2);
-    setcolor(COLOR(200, 50, 10)); // Màu đỏ thẫm sang trọng
+    setcolor(COLOR(200, 50, 10));
     settextjustify(CENTER_TEXT, CENTER_TEXT);
     outtextxy(1000, 42, highScoreStr);
     
-    // Center Title Block - Căn giữa màn hình 1150 với kén gỗ 3D
-    my_bar(453, 0, 697, 72, COLOR(85, 45, 30)); // Đổ bóng gỗ
+    // Center Title Block 
+    my_bar(453, 0, 697, 72, COLOR(85, 45, 30)); 
     my_bar(455, 0, 695, 70, woodDark); 
     my_bar(459, 0, 691, 65, orangeCenter);
     setbkcolor(orangeCenter);
-    setcolor(COLOR(85, 45, 30)); // Đổ bóng chữ tiêu đề
+    setcolor(COLOR(85, 45, 30)); 
     settextstyle(BOLD_FONT, HORIZ_DIR, 4);
     settextjustify(CENTER_TEXT, CENTER_TEXT);
     outtextxy(577, 34, (char*)"CatCatch!");
     setcolor(textGold);
     outtextxy(575, 32, (char*)"CatCatch!");
     
-    // Mang (Lives HUD inside custom cute pink pill) - Kén hồng xinh xắn căng nét
-    my_bar(485, 42, 665, 60, COLOR(50, 20, 10)); // Bóng kén
-    my_bar(487, 40, 663, 58, COLOR(255, 235, 235)); // Nền kén hồng pastel ngọt ngào
+    // Mang (Lives HUD inside custom cute pink pill)
+    my_bar(485, 42, 665, 60, COLOR(50, 20, 10)); 
+    my_bar(487, 40, 663, 58, COLOR(255, 235, 235)); 
     setbkcolor(COLOR(255, 235, 235));
-    setcolor(COLOR(243, 139, 168)); // Màu hồng cánh sen ngọt ngào
+    setcolor(COLOR(243, 139, 168));
     settextstyle(BOLD_FONT, HORIZ_DIR, 1);
     settextjustify(CENTER_TEXT, CENTER_TEXT);
     outtextxy(520, 52, (char*)"MANG:");
@@ -90,14 +90,14 @@ void veNenKhung(struct GiaoDien_State* state) {
     // 1. Sky Base (Tim den dam)
     my_bar(10, 82, 1140, 515, skyDark); 
     
-    // 2. Stars (Ngôi sao đêm lấp lánh động nhịp nhàng)
+    // 2. Stars
     static int playStarFrame = 0;
     playStarFrame++;
     for(x = 25; x < 1140; x += px*3) {
-        for(y = 100; y < 430; y += px*3) { // Giữ sao trên chân trời núi
+        for(y = 100; y < 430; y += px*3) { 
             int h = (x*17 + y*31) % 100;
             if(h < 3) {
-                // Hiệu ứng lấp nháy động dựa vào thời gian thực
+                
                 int phase = (x + y + playStarFrame) % 8;
                 if(phase < 2) my_bar(x, y, x+3, y+3, starColor1);
                 else if(phase < 5) my_bar(x+1, y+1, x+2, y+2, starColor2);
@@ -105,22 +105,20 @@ void veNenKhung(struct GiaoDien_State* state) {
         }
     }
 
-    // Vẽ Mặt Trăng Khuyết Lượng Giác Vàng Hoàng Kim (Golden Crescent Moon)
+    
     for(int dy = -25; dy <= 25; dy++) {
         for(int dx = -25; dx <= 25; dx++) {
             if(dx*dx + dy*dy <= 25*25) {
                 int cdx = dx + 10;
                 int cdy = dy - 3;
                 if(cdx*cdx + cdy*cdy > 23*23) {
-                    my_putpixel(1050 + dx, 150 + dy, COLOR(254, 215, 0)); // Màu vàng hoàng kim
+                    my_putpixel(1050 + dx, 150 + dy, COLOR(254, 215, 0)); 
                 }
             }
         }
     }
 
-    // 2.5 PROCEDURAL GEOMETRIC MOUNTAINS (Dãy núi trùng điệp chân trời lượng giác)
-    // Tự động quét và vẽ các đồi núi nhấp nhô vô cùng mềm mại tự nhiên dựa trên tổng hợp 3 tần số sóng lượng giác.
-    // Tông màu tím sẫm huyền ảo tạo hiệu ứng xa xăm kỳ bí.
+    // 2.5 PROCEDURAL GEOMETRIC MOUNTAINS 
     for(x = 10; x < 1140; x++) {
         double wave1 = 15.0 * sin(x * 0.01);
         double wave2 = 8.0 * cos(x * 0.03);
@@ -130,7 +128,7 @@ void veNenKhung(struct GiaoDien_State* state) {
         if(peakY < 450) peakY = 450;
         if(peakY > 515) peakY = 515;
         
-        // Vẽ cột núi dọc bằng Bresenham
+       
         veDuongThang(x, 515, x, peakY, COLOR(35, 25, 60));
     }
 
@@ -152,19 +150,12 @@ void veNenKhung(struct GiaoDien_State* state) {
         my_bar(x, 530+drop, x+px, 530+drop+px/2, grassDark); // dark shadow edge
     }
     
-    // =========================================================================
-    // 4.5 Fractal Grass (Bụi cây gai Fractal tự đồng dạng - Đường cong Koch)
-    // Ứng dụng: Lồng ghép cấu trúc toán học Fractal của Koch ở độ sâu đệ quy bằng 3
-    // để mô phỏng chân thực các bụi cây gai dại, nhấp nhô tự nhiên nhô lên từ nền cỏ.
-    // Phối màu: Sử dụng gam màu xanh tươi sáng (Pastel Green) tạo hiệu ứng tương phản
-    // hài hòa với màu nền cỏ đậm, làm nổi bật tính thẩm mỹ và chiều sâu của bối cảnh rừng.
-    // =========================================================================
+    
     int fractalGrass = COLOR(180, 240, 100);
-    // Vẽ bụi gai Fractal bên trái màn hình (Gồm 2 phân đoạn từ x = 30 đến x = 310)
+   
     veDuongKoch(30, 515, 170, 515, fractalGrass, 3);
     veDuongKoch(170, 515, 310, 515, fractalGrass, 3);
     
-    // Vẽ bụi gai Fractal bên phải màn hình (Gồm 2 phân đoạn đối xứng dịch chuyển từ x = 840 đến x = 1120)
     veDuongKoch(840, 515, 980, 515, fractalGrass, 3);
     veDuongKoch(980, 515, 1120, 515, fractalGrass, 3);
 
@@ -180,8 +171,8 @@ void veNenKhung(struct GiaoDien_State* state) {
         if (fPhase < 12) { // Nhap nhay
             int glow = 150 + fPhase * 8;
             if(glow > 255) glow = 255;
-            my_bar(fx, fy, fx + 2, fy + 2, COLOR(glow, 255, 100)); // Màu xanh vàng của đom đóm
-            my_bar(fx-1, fy+1, fx+3, fy+1, COLOR(100, 200, 50)); // Hào quang nhẹ
+            my_bar(fx, fy, fx + 2, fy + 2, COLOR(glow, 255, 100)); 
+            my_bar(fx-1, fy+1, fx+3, fy+1, COLOR(100, 200, 50)); 
         }
     }
 

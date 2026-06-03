@@ -22,6 +22,13 @@ void toMauDeQuy(int x, int y, int fill_color, int boundary_color);
 // Fractal Koch curve
 void veDuongKoch(int x1, int y1, int x2, int y2, int color, int depth);
 
+// Fractal C-Curve (Levy C Curve)
+void veDuongC(int x1, int y1, int x2, int y2, int color, int depth);
+
+// Fractal Dragon Curve (Heighway Dragon)
+// huong: +1 = gap phai, -1 = gap trai
+void veDuongRong(int x1, int y1, int x2, int y2, int color, int depth, int huong);
+
 // 2D Rotation Transformation
 void PhepQuay2D(int *px, int *py, int cx, int cy, double angle);
 

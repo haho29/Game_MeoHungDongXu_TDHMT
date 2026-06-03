@@ -216,31 +216,31 @@ void veDongHo(int x, int y, double angle) {
     int white = COLOR(255, 255, 255);
     int shadow = COLOR(200, 150, 0);
 
-    // Vẽ vành ngoài đồng hồ
+    
     veDuongTron(x, y + 1, 14, shadow);
     veDuongTron(x, y, 14, gold);
     toMauDeQuy(x, y, gold, gold);
     
-    // Mặt đồng hồ màu xanh nhạt
+    
     veDuongTron(x, y, 11, blueBg);
     toMauDeQuy(x, y, blueBg, blueBg);
 
     int p1x, p1y, p2x, p2y;
     
-    // Kim phút
+    
     p1x = x; p1y = y;
     p2x = x; p2y = y - 8;
     PhepQuay2D(&p2x, &p2y, x, y, angle * 2.0);
     veDuongThang(p1x, p1y, p2x, p2y, white);
     veDuongThang(p1x+1, p1y, p2x+1, p2y, white);
     
-    // Kim giờ
+    
     p2x = x + 5; p2y = y + 5;
     PhepQuay2D(&p2x, &p2y, x, y, angle * 0.5);
     veDuongThang(p1x, p1y, p2x, p2y, white);
     veDuongThang(p1x+1, p1y+1, p2x+1, p2y+1, white);
     
-    // Dấu chấm tâm
+    
     veDuongTron(x, y, 2, white);
     toMauDeQuy(x, y, white, white);
 }

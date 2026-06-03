@@ -23,7 +23,7 @@ void hienThiManHinhKetThuc(struct GiaoDien_State* state, int trang, bool isNewHi
     char highScoreStr[20];
     int i;
     
-    // 1. CONFETTI (Phao giay) - Phủ rộng 1150x700
+    // 1. CONFETTI (Phao giay) 
     int colors[] = {COLOR(255, 50, 50), COLOR(50, 255, 50), COLOR(50, 150, 255), COLOR(255, 255, 50), COLOR(255, 150, 50)};
     for(i=0; i<50; i++) {
         int cx = (i * 83) % 1150;
@@ -36,7 +36,7 @@ void hienThiManHinhKetThuc(struct GiaoDien_State* state, int trang, bool isNewHi
     my_bar(325, 245, 825, 535, textBrown); // Vien
     my_bar(330, 250, 820, 530, panelBg);   // Nen
     
-    // 3. CROWN (Vuong mien tren panel) - Căn giữa 1150
+    // 3. CROWN (Vuong mien tren panel) 
     my_bar(525, 230, 625, 245, gold); // De vuong mien
     my_bar(525, 200, 540, 230, gold); // Gai trai
     my_bar(565, 190, 585, 230, gold); // Gai giua
@@ -96,7 +96,7 @@ void hienThiManHinhKetThuc(struct GiaoDien_State* state, int trang, bool isNewHi
         outtextxy(555, 445, (char*)"MOI!");
     }
     
-    // 6. CUTE CAT WINKING (Ben phai) - Căn giữa 1150
+    // 6. CUTE CAT WINKING (Ben phai) 
     int catPink = COLOR(245, 194, 231);
     int catDarkPink = COLOR(243, 139, 168); // Nose and inner ear
     int black = COLOR(17, 17, 27);

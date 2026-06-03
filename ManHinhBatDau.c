@@ -113,8 +113,22 @@ int hienThiManHinhBatDau(int *skin, int *phuKien, int *xu) {
             }
         }
         
-        // Fractal Bush (Bui co)
+        // Fractal Bush (Bui co) - Koch Curve
         veDuongKoch(50, 505, 500, 505, COLOR(30, 160, 60), 4);
+        
+        // =========================================================================
+        // 4.5 Dragon Curve - Duong cong Rong trang tri goc trai man hinh bat dau
+        // Ve tai goc duoi trai (vung co) voi do sau 10, mau tim huyen bi de tao
+        // cam giac ky ao, phuc tap. Dragon Curve bao phu vung tu (0,480) den (350,680)
+        // =========================================================================
+        //veDuongRong(30, 490, 450, 490, COLOR(120, 60, 200), 10, 1);
+        
+        // =========================================================================
+        // 4.6 C-Curve - Duong cong C trang tri ben phai man hinh bat dau  
+        // Ve tai goc duoi phai voi mau xanh duong moc song lanh, do sau 12
+        // tao hieu ung song nuoc bao xung quanh man hinh chu de game
+        // =========================================================================
+        //veDuongC(650, 490, 1100, 490, COLOR(60, 140, 220), 10);
         
         // 4. MEO - dat o x=280, y=525 (tren co)
         veMeoCoPhuKien(280, 530, false, t, *skin, *phuKien, false);
