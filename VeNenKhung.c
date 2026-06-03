@@ -5,6 +5,81 @@
 #include <graphics.h>
 #include <stdio.h>
 #include <math.h>
+#include <stdlib.h>
+
+#define PLAY_LEFT 10
+#define PLAY_TOP 82
+#define PLAY_RIGHT 1140
+#define PLAY_BOTTOM 560
+
+static void putpixelTrongKhungChoi(int x, int y, int color) {
+    if (x >= PLAY_LEFT && x <= PLAY_RIGHT && y >= PLAY_TOP && y <= PLAY_BOTTOM) {
+        my_putpixel(x, y, color);
+    }
+}
+
+static void veDuongThangTrongKhungChoi(int x1, int y1, int x2, int y2, int color) {
+    int dx = abs(x2 - x1);
+    int dy = abs(y2 - y1);
+    int sx = (x1 < x2) ? 1 : -1;
+    int sy = (y1 < y2) ? 1 : -1;
+    int err = dx - dy;
+
+    while (1) {
+        putpixelTrongKhungChoi(x1, y1, color);
+        if (x1 == x2 && y1 == y2) break;
+
+        int e2 = 2 * err;
+        if (e2 > -dy) {
+            err -= dy;
+            x1 += sx;
+        }
+        if (e2 < dx) {
+            err += dx;
+            y1 += sy;
+        }
+    }
+}
+
+static void veDuongCTrongKhungChoi(int x1, int y1, int x2, int y2, int color, int depth) {
+    if (depth == 0) {
+        veDuongThangTrongKhungChoi(x1, y1, x2, y2, color);
+    } else {
+        int dx = x2 - x1;
+        int dy = y2 - y1;
+        int mx = x1 + (dx - dy) / 2;
+        int my = y1 + (dx + dy) / 2;
+
+        veDuongCTrongKhungChoi(x1, y1, mx, my, color, depth - 1);
+        veDuongCTrongKhungChoi(mx, my, x2, y2, color, depth - 1);
+    }
+}
+
+static void veDuongRongTrongKhungChoi(int x1, int y1, int x2, int y2, int color, int depth, int huong) {
+    if (depth == 0) {
+        veDuongThangTrongKhungChoi(x1, y1, x2, y2, color);
+    } else {
+        int mx = (x1 + x2 + huong * (y1 - y2)) / 2;
+        int my = (y1 + y2 + huong * (x2 - x1)) / 2;
+
+        veDuongRongTrongKhungChoi(x1, y1, mx, my, color, depth - 1, 1);
+        veDuongRongTrongKhungChoi(x2, y2, mx, my, color, depth - 1, -1);
+    }
+}
+
+static void veNenFractalTrongKhungChoi(void) {
+    int cCurveColor = COLOR(74, 102, 170);
+    int dragonShadow = COLOR(36, 24, 72);
+    int dragonColor = COLOR(225, 68, 80);
+    int dragonLight = COLOR(255, 180, 90);
+
+    veDuongCTrongKhungChoi(112, 300, 232, 300, cCurveColor, 9);
+    veDuongCTrongKhungChoi(118, 306, 226, 306, COLOR(48, 70, 130), 8);
+
+    veDuongRongTrongKhungChoi(824, 242, 956, 242, dragonShadow, 12, 1);
+    veDuongRongTrongKhungChoi(820, 238, 952, 238, dragonColor, 12, 1);
+    veDuongRongTrongKhungChoi(842, 260, 928, 260, dragonLight, 10, -1);
+}
 
 void veNenKhung(struct GiaoDien_State* state) {
     int i;
@@ -104,6 +179,9 @@ void veNenKhung(struct GiaoDien_State* state) {
             }
         }
     }
+
+    // Duong cong C va Rong ve nho trong khung choi de lam nen.
+    veNenFractalTrongKhungChoi();
 
     
     for(int dy = -25; dy <= 25; dy++) {
